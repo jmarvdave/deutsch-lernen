@@ -1,4 +1,4 @@
-package application.service;
+package application.configuration;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -12,7 +12,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
-import application.Quickstart;
+import application.App;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -79,7 +79,7 @@ public class SheetsConfiguration {
      */
     private Credential authorize() throws IOException {
         // Load client secrets.
-        try (InputStream in = Quickstart.class.getResourceAsStream("/client_secret.json");) {
+        try (InputStream in = App.class.getResourceAsStream("/client_secret.json");) {
             GoogleClientSecrets clientSecrets =
                     GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
