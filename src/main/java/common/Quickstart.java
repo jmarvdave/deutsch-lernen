@@ -1,3 +1,5 @@
+package common;
+
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -11,6 +13,9 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
 import com.google.api.services.sheets.v4.model.ValueRange;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,32 +23,44 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 
-public class Quickstart {
-    /** Application name. */
+@SpringBootApplication
+public class Quickstart implements CommandLineRunner {
+    /**
+     * Application name.
+     */
     private static final String APPLICATION_NAME =
-        "deutsch-lernen";
+            "deutsch-lernen";
 
-    /** Directory to store user credentials for this application. */
+    /**
+     * Directory to store user credentials for this application.
+     */
     private static final java.io.File DATA_STORE_DIR = new java.io.File(
-        System.getProperty("user.home"), ".credentials/deutsch-lernen");
+            System.getProperty("user.home"), ".credentials/deutsch-lernen");
 
-    /** Global instance of the {@link FileDataStoreFactory}. */
+    /**
+     * Global instance of the {@link FileDataStoreFactory}.
+     */
     private static FileDataStoreFactory DATA_STORE_FACTORY;
 
-    /** Global instance of the JSON factory. */
+    /**
+     * Global instance of the JSON factory.
+     */
     private static final JsonFactory JSON_FACTORY =
-        JacksonFactory.getDefaultInstance();
+            JacksonFactory.getDefaultInstance();
 
-    /** Global instance of the HTTP transport. */
+    /**
+     * Global instance of the HTTP transport.
+     */
     private static HttpTransport HTTP_TRANSPORT;
 
-    /** Global instance of the scopes required by this quickstart.
-     *
+    /**
+     * Global instance of the scopes required by this quickstart.
+     * <p>
      * If modifying these scopes, delete your previously saved credentials
      * at ~/.credentials/sheets.googleapis.com-java-quickstart
      */
     private static final List<String> SCOPES =
-        Arrays.asList(SheetsScopes.SPREADSHEETS_READONLY);
+            Arrays.asList(SheetsScopes.SPREADSHEETS_READONLY);
 
     static {
         try {
@@ -57,32 +74,34 @@ public class Quickstart {
 
     /**
      * Creates an authorized Credential object.
+     *
      * @return an authorized Credential object.
      * @throws IOException
      */
-    public static Credential authorize() throws IOException {
+    private static Credential authorize() throws IOException {
         // Load client secrets.
-        InputStream in =
-            Quickstart.class.getResourceAsStream("/client_secret.json");
-        GoogleClientSecrets clientSecrets =
-            GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+        try (InputStream in = Quickstart.class.getResourceAsStream("/client_secret.json");) {
+            GoogleClientSecrets clientSecrets =
+                    GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
-        // Build flow and trigger user authorization request.
-        GoogleAuthorizationCodeFlow flow =
-                new GoogleAuthorizationCodeFlow.Builder(
-                        HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-                .setDataStoreFactory(DATA_STORE_FACTORY)
-                .setAccessType("offline")
-                .build();
-        Credential credential = new AuthorizationCodeInstalledApp(
-            flow, new LocalServerReceiver()).authorize("user");
-        System.out.println(
-                "Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
-        return credential;
+            // Build flow and trigger user authorization request.
+            GoogleAuthorizationCodeFlow flow =
+                    new GoogleAuthorizationCodeFlow.Builder(
+                            HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
+                            .setDataStoreFactory(DATA_STORE_FACTORY)
+                            .setAccessType("offline")
+                            .build();
+            Credential credential = new AuthorizationCodeInstalledApp(
+                    flow, new LocalServerReceiver()).authorize("user");
+            System.out.println(
+                    "Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
+            return credential;
+        }
     }
 
     /**
      * Build and return an authorized Sheets API client service.
+     *
      * @return an authorized Sheets API client service
      * @throws IOException
      */
@@ -94,6 +113,10 @@ public class Quickstart {
     }
 
     public static void main(String[] args) throws IOException {
+        SpringApplication.run(Quickstart.class, args);
+    }
+
+    public void run(String... args) throws Exception {
         // Build a new authorized API client service.
         Sheets service = getSheetsService();
 
@@ -102,19 +125,16 @@ public class Quickstart {
         String spreadsheetId = "1MpUyZq-UDfvHAt2jZN45cEQnyeSk6Nr56_slyQUMcDI";
         String range = "A2:E";
         ValueRange response = service.spreadsheets().values()
-            .get(spreadsheetId, range)
-            .execute();
+                .get(spreadsheetId, range)
+                .execute();
+
         List<List<Object>> values = response.getValues();
-        if (values == null || values.size() == 0) {
+
+        if (values == null || values.isEmpty()) {
             System.out.println("No data found.");
         } else {
-          System.out.println("Verb, Satz");
-          for (List row : values) {
-            // Print columns A and E, which correspond to indices 0 and 4.
-            System.out.printf("%s, %s\n", row.get(0), row.get(1));
-          }
+            System.out.println("Verb, Satz");
+            values.forEach((row) -> System.out.printf("%s, %s\n", row.get(0), row.get(1)));
         }
     }
-
-
 }
