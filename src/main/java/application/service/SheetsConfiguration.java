@@ -1,4 +1,4 @@
-package common;
+package application.service;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -12,19 +12,18 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
-import com.google.api.services.sheets.v4.model.ValueRange;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import application.Quickstart;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-@SpringBootApplication
-public class Quickstart implements CommandLineRunner {
+@Configuration
+public class SheetsConfiguration {
     /**
      * Application name.
      */
@@ -60,7 +59,7 @@ public class Quickstart implements CommandLineRunner {
      * at ~/.credentials/sheets.googleapis.com-java-quickstart
      */
     private static final List<String> SCOPES =
-            Arrays.asList(SheetsScopes.SPREADSHEETS_READONLY);
+            Collections.singletonList(SheetsScopes.SPREADSHEETS_READONLY);
 
     static {
         try {
@@ -78,7 +77,7 @@ public class Quickstart implements CommandLineRunner {
      * @return an authorized Credential object.
      * @throws IOException
      */
-    private static Credential authorize() throws IOException {
+    private Credential authorize() throws IOException {
         // Load client secrets.
         try (InputStream in = Quickstart.class.getResourceAsStream("/client_secret.json");) {
             GoogleClientSecrets clientSecrets =
@@ -105,36 +104,11 @@ public class Quickstart implements CommandLineRunner {
      * @return an authorized Sheets API client service
      * @throws IOException
      */
-    public static Sheets getSheetsService() throws IOException {
+    @Bean
+    public Sheets getSheetsService() throws IOException {
         Credential credential = authorize();
         return new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
                 .setApplicationName(APPLICATION_NAME)
                 .build();
-    }
-
-    public static void main(String[] args) throws IOException {
-        SpringApplication.run(Quickstart.class, args);
-    }
-
-    public void run(String... args) throws Exception {
-        // Build a new authorized API client service.
-        Sheets service = getSheetsService();
-
-        // Prints the names and majors of students in a sample spreadsheet:
-        // https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
-        String spreadsheetId = "1MpUyZq-UDfvHAt2jZN45cEQnyeSk6Nr56_slyQUMcDI";
-        String range = "A2:E";
-        ValueRange response = service.spreadsheets().values()
-                .get(spreadsheetId, range)
-                .execute();
-
-        List<List<Object>> values = response.getValues();
-
-        if (values == null || values.isEmpty()) {
-            System.out.println("No data found.");
-        } else {
-            System.out.println("Verb, Satz");
-            values.forEach((row) -> System.out.printf("%s, %s\n", row.get(0), row.get(1)));
-        }
     }
 }
