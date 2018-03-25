@@ -1,11 +1,11 @@
-package application.configuration;
+package application.model;
 
 import java.util.List;
 
 public class VerbSheet {
     private final List<VerbRow> values;
 
-    VerbSheet(List<VerbRow> values) {
+    public VerbSheet(List<VerbRow> values) {
         this.values = values;
     }
 

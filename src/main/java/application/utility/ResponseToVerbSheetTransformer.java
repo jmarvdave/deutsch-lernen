@@ -1,4 +1,6 @@
-package application.configuration;
+package application.utility;
+
+import application.model.VerbRow;
 
 import java.util.List;
 import java.util.stream.Collectors;

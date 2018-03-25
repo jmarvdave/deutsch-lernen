@@ -1,11 +1,11 @@
-package application.configuration;
+package application.model;
 
 public class VerbRow {
     private final String verb;
     private final String sentence;
     private final String notes;
 
-    VerbRow(String verb, String sentence, String notes) {
+    public VerbRow(String verb, String sentence, String notes) {
         this.verb = verb;
         this.sentence = sentence;
         this.notes = notes;

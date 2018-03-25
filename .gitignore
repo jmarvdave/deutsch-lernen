@@ -3,3 +3,7 @@
 .idea
 target/
 src/main/resources/client_secret.json
+*.pdf
+*.aux
+*.tex
+*.log
