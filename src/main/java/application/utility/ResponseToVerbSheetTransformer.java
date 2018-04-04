@@ -5,7 +5,7 @@ import application.model.VerbRow;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ResponseToVerbSheetTransformer {
+public class ResponseToVerbSheetTransformer implements SheetTransformer {
     public List<VerbRow> transform(List<List<Object>> values) {
         return values.stream().map((row) -> {
             StringBuilder o = new StringBuilder("");
