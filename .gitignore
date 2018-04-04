@@ -7,3 +7,4 @@ src/main/resources/client_secret.json
 *.aux
 *.tex
 *.log
+*.json
