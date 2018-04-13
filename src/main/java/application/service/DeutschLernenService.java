@@ -1,10 +1,10 @@
 package application.service;
 
-import application.model.NounRow;
 import application.model.NounSheet;
-import application.model.VerbRow;
+import application.model.Test;
 import application.model.VerbSheet;
 import application.utility.LatexWriter;
+import application.utility.TestGenerator;
 import application.utility.ResponseToNounSheetTransformer;
 import application.utility.ResponseToVerbSheetTransformer;
 import com.google.api.services.sheets.v4.Sheets;
@@ -12,15 +12,10 @@ import com.google.api.services.sheets.v4.model.ValueRange;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class DeutschLernenService {
-    private static final int NUMBER_OF_VERBS = 10;
-    private static final int NUMBER_OF_NOUNS = 4;
+
     private final Sheets sheetsService;
     private final LatexWriter writer;
     private static final String VERB_SHEET_ID = "1MpUyZq-UDfvHAt2jZN45cEQnyeSk6Nr56_slyQUMcDI";
@@ -36,36 +31,8 @@ public class DeutschLernenService {
         VerbSheet verbValues = new VerbSheet(new ResponseToVerbSheetTransformer().transform(getAllRows(VERB_SHEET_ID)));
         NounSheet nounValues = new NounSheet(new ResponseToNounSheetTransformer().transform(getAllRows(NOUN_SHEET_ID)));
 
-        generateRandomTest(verbValues, nounValues);
-    }
-
-    private void generateRandomTest(VerbSheet verbSheet, NounSheet nounSheet) {
-        List<VerbRow> allVerbs = verbSheet.getValues();
-
-        List<NounRow> allNouns = nounSheet.getValues();
-
-        List<VerbRow> randomVerbs = generateRandomIntegers(new HashSet<>(), allVerbs.size(), NUMBER_OF_VERBS)
-                .stream()
-                .map(allVerbs::get)
-                .collect(Collectors.toList());
-
-        List<NounRow> randomNouns = generateRandomIntegers(new HashSet<>(), allNouns.size(), NUMBER_OF_NOUNS)
-                .stream()
-                .map(allNouns::get)
-                .collect(Collectors.toList());
-
-        writer.writeTestToFile(randomVerbs, randomNouns);
-    }
-
-    private Set<Integer> generateRandomIntegers(Set<Integer> numbers, int numbersOfVerbs, int desiredSize) {
-        if (numbers.size() == desiredSize) {
-            return numbers;
-        } else {
-            Random rand = new Random();
-            int n = rand.nextInt(numbersOfVerbs);
-            numbers.add(n);
-            return generateRandomIntegers(numbers, numbersOfVerbs, desiredSize);
-        }
+        Test test = new TestGenerator(verbValues, nounValues).generate();
+        writer.writeTestToFile(test.getRandomVerbs(), test.getRandomNouns());
     }
 
     private List<List<Object>> getAllRows(String sheetId) throws IOException {

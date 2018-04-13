@@ -1,6 +1,5 @@
 package application.utility;
 
-
 import application.model.SheetRow;
 
 import java.util.List;
