@@ -8,3 +8,4 @@ src/main/resources/client_secret.json
 *.tex
 *.log
 *.json
+latexdockercmd.sh

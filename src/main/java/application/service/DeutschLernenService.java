@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 public class DeutschLernenService {
     private static final int NUMBER_OF_VERBS = 10;
-    private static final int NUMBER_OF_NOUNS = 3;
+    private static final int NUMBER_OF_NOUNS = 4;
     private final Sheets sheetsService;
     private final LatexWriter writer;
     private static final String VERB_SHEET_ID = "1MpUyZq-UDfvHAt2jZN45cEQnyeSk6Nr56_slyQUMcDI";
