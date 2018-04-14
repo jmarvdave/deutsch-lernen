@@ -1,8 +1,8 @@
 package application.configuration;
 
 import application.service.DeutschLernenService;
-import application.utility.LatexWriter;
-import com.google.api.services.sheets.v4.Sheets;
+import application.writer.LatexWriter;
+import application.transformer.ResponseToSheetTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,17 +10,17 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ApplicationConfiguration {
 
-    private final Sheets service;
+    private final ResponseToSheetTransformer transformer;
     private final LatexWriter latexWriter;
 
     @Autowired
-    public ApplicationConfiguration(Sheets service, LatexWriter latexWriter) {
-        this.service = service;
+    public ApplicationConfiguration(ResponseToSheetTransformer transformer, LatexWriter latexWriter) {
+        this.transformer = transformer;
         this.latexWriter = latexWriter;
     }
 
     @Bean
     public DeutschLernenService application() {
-        return new DeutschLernenService(service, latexWriter);
+        return new DeutschLernenService(transformer, latexWriter);
     }
 }
