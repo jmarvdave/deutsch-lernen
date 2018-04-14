@@ -1,4 +1,4 @@
-package application.utility;
+package application.writer;
 
 import application.model.NounRow;
 import application.model.VerbRow;

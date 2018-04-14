@@ -1,5 +1,7 @@
 package application.configuration;
 
+import application.transformer.ResponseToSheetTransformer;
+import application.utility.SheetsRetriever;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
@@ -86,10 +88,12 @@ public class SheetsConfiguration {
      * @throws IOException
      */
     @Bean
-    public Sheets getSheetsService() throws IOException {
+    public ResponseToSheetTransformer transformer() throws IOException {
         Credential credential = authorize();
-        return new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
+        Sheets sheetsService = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
                 .setApplicationName(APPLICATION_NAME)
                 .build();
+        SheetsRetriever sheetsRetriever = new SheetsRetriever(sheetsService);
+        return new ResponseToSheetTransformer(sheetsRetriever);
     }
 }

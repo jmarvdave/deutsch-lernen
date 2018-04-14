@@ -1,5 +1,6 @@
-package application.utility;
+package application.generator;
 
+import application.generator.TestGenerator;
 import application.model.NounRow;
 import application.model.NounSheet;
 import application.model.VerbRow;

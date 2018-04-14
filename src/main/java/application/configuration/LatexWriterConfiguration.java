@@ -1,6 +1,6 @@
 package application.configuration;
 
-import application.utility.LatexWriter;
+import application.writer.LatexWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
