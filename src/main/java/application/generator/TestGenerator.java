@@ -1,4 +1,4 @@
-package application.utility;
+package application.generator;
 
 import application.model.NounRow;
 import application.model.NounSheet;
