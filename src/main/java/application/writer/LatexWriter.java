@@ -21,17 +21,15 @@ public class LatexWriter {
             "\\usepackage[utf8]{inputenc}\n" +
             "\\pagenumbering{gobble}\n" +
             "\\rhead{" + formatter.format(new Date()) + "}\n" +
-            "\\lhead{\\textsc{Prüfung}}\n" +
+            "\\lhead{\\textsc{Prüfung:} Schreibe Sätze mit den folgenden Wörtern }\n" +
             "\\begin{document}\n" +
             "\\begin{questions}\n\n";
 
-    private static final String VERB = "\\question Schreib einen Satz mit dem Verb \\textit{%s}\n" +
+    private static final String VERB = "\\question %s\n" +
             "\\vspace{1.5\\baselineskip}\n\n";
-
     private static final String REGULAR_SPACE = "\\vspace{1.5\\baselineskip}\n\n";
-    private static final String NOUN = "\\question Schreib einen Satz mit dem Nomen \\textit{%s}\n" +
-            REGULAR_SPACE;
-    private static final String LAST_NOUN = "\\question Schreib einen Satz mit dem Nomen \\textit{%s}\n";
+    private static final String NOUN = "\\question %s\n" + REGULAR_SPACE;
+    private static final String LAST_NOUN = "\\question %s\n";
 
     private static final String ENDING = "\\end{questions}\n" +
             "\\end{document}";
