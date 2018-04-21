@@ -5,4 +5,4 @@ A project to help me learn new vocabulary by creating latex formatted tests that
 
 ## example of the end product
 
-![alt text](https://raw.githubusercontent.com/jmarvdave/deutsch-lernen/master/example/example.jpg
+![alt text](https://raw.githubusercontent.com/jmarvdave/deutsch-lernen/master/example/example.jpg)
