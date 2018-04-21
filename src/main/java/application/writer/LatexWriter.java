@@ -20,20 +20,16 @@ public class LatexWriter {
     private static final String BEGINNING = "\\documentclass{exam}\n" +
             "\\usepackage[utf8]{inputenc}\n" +
             "\\pagenumbering{gobble}\n" +
-            "\n" +
+            "\\rhead{" + formatter.format(new Date()) + "}\n" +
+            "\\lhead{\\textsc{Prüfung:} Schreibe Sätze mit den folgenden Wörtern }\n" +
             "\\begin{document}\n" +
-            "\n" +
-            "\\title{Prüfung}\n" +
-            "\\date{" + formatter.format(new Date()) + "}\n" +
-            "\\author{John-Marvin Davis}\n" +
-            "\\maketitle\n" +
             "\\begin{questions}\n\n";
 
-    private static final String VERB = "\\question Schreib einen Satz mit dem Verb \\textit{%s}\n" +
-            "\\vspace{\\stretch{1}}\n\n";
-
-    private static final String NOUN = "\\question Schreib einen Satz mit dem Nomen \\textit{%s}\n" +
-            "\\vspace{\\stretch{1}}\n\n";
+    private static final String VERB = "\\question %s\n" +
+            "\\vspace{1.5\\baselineskip}\n\n";
+    private static final String REGULAR_SPACE = "\\vspace{1.5\\baselineskip}\n\n";
+    private static final String NOUN = "\\question %s\n" + REGULAR_SPACE;
+    private static final String LAST_NOUN = "\\question %s\n";
 
     private static final String ENDING = "\\end{questions}\n" +
             "\\end{document}";
@@ -48,7 +44,13 @@ public class LatexWriter {
             });
 
             nouns.forEach((noun) -> {
-                write(() -> bufferedWriter.write(String.format(NOUN, noun.getNoun())));
+                write(() -> {
+                    if (nouns.indexOf(noun) != nouns.size() - 1) {
+                        bufferedWriter.write(String.format(NOUN, noun.getNoun()));
+                    } else {
+                        bufferedWriter.write(String.format(LAST_NOUN, noun.getNoun()));
+                    }
+                });
             });
 
             write(() -> bufferedWriter.write(ENDING));

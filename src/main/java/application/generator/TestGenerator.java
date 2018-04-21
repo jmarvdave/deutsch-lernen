@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class TestGenerator {
-    private static final int NUMBER_OF_VERBS = 10;
+    private static final int NUMBER_OF_VERBS = 14;
     private static final int NUMBER_OF_NOUNS = 4;
 
     private final VerbSheet verbValues;
