@@ -1,27 +1,17 @@
 package application.generator;
 
-import application.generator.TestGenerator;
 import application.model.NounRow;
-import application.model.NounSheet;
 import application.model.VerbRow;
-import application.model.VerbSheet;
 import com.google.common.collect.ImmutableList;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TestGeneratorTest {
-
-    @Mock
-    private VerbSheet verbSheet;
-    @Mock
-    private NounSheet nounSheet;
 
     private TestGenerator testGenerator;
 
@@ -31,9 +21,9 @@ public class TestGeneratorTest {
         VerbRow verbRow2 = new VerbRow("lachen","wir lachen zu viel", "lächeln ist nicht das gleiche Ding");
         NounRow nounRow = new NounRow("der","Laptop", "wird bearbeitet");
 
-        when(verbSheet.getValues()).thenReturn(ImmutableList.of(verbRow1, verbRow2));
-        when(nounSheet.getValues()).thenReturn(ImmutableList.of(nounRow));
-        testGenerator = new TestGenerator(verbSheet, nounSheet);
+        ImmutableList<VerbRow> verbRows = ImmutableList.of(verbRow1, verbRow2);
+        ImmutableList<NounRow> nounRows = ImmutableList.of(nounRow);
+        testGenerator = new TestGenerator(verbRows, nounRows);
     }
 
     @Test

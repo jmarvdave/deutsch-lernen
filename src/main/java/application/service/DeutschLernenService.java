@@ -1,13 +1,14 @@
 package application.service;
 
-import application.model.NounSheet;
-import application.model.Test;
-import application.model.VerbSheet;
-import application.writer.LatexWriter;
-import application.transformer.ResponseToSheetTransformer;
 import application.generator.TestGenerator;
+import application.model.NounRow;
+import application.model.Test;
+import application.model.VerbRow;
+import application.transformer.ResponseToSheetTransformer;
+import application.writer.LatexWriter;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 
 public class DeutschLernenService {
 
@@ -23,10 +24,10 @@ public class DeutschLernenService {
 
     @PostConstruct
     public void run() {
-        VerbSheet verbValues = transformer.transformToVerbSheet(VERB_SHEET_ID);
-        NounSheet nounValues = transformer.transformToNounSheet(NOUN_SHEET_ID);
+        List<VerbRow> verbRows = transformer.transformToVerbSheet(VERB_SHEET_ID);
+        List<NounRow> nounRows = transformer.transformToNounSheet(NOUN_SHEET_ID);
 
-        Test test = new TestGenerator(verbValues, nounValues).generate();
+        Test test = new TestGenerator(verbRows, nounRows).generate();
         writer.writeTestToFile(test.getRandomVerbs(), test.getRandomNouns());
     }
 }
