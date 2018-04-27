@@ -1,10 +1,8 @@
 package application.generator;
 
 import application.model.NounRow;
-import application.model.NounSheet;
 import application.model.Test;
 import application.model.VerbRow;
-import application.model.VerbSheet;
 
 import java.util.HashSet;
 import java.util.List;
@@ -15,28 +13,23 @@ import java.util.stream.Collectors;
 public class TestGenerator {
     private static final int NUMBER_OF_VERBS = 14;
     private static final int NUMBER_OF_NOUNS = 4;
+    private final List<VerbRow> verbRows;
+    private final List<NounRow> nounRows;
 
-    private final VerbSheet verbValues;
-    private final NounSheet nounValues;
-
-    public TestGenerator(VerbSheet verbSheet, NounSheet nounSheet) {
-        this.verbValues = verbSheet;
-        this.nounValues = nounSheet;
+    public TestGenerator(List<VerbRow> verbRows, List<NounRow> nounRows) {
+        this.verbRows = verbRows;
+        this.nounRows = nounRows;
     }
 
     public Test generate() {
-        List<VerbRow> allVerbs = verbValues.getValues();
-
-        List<NounRow> allNouns = nounValues.getValues();
-
-        List<VerbRow> randomVerbs = generateRandomIntegers(new HashSet<>(), allVerbs.size(), NUMBER_OF_VERBS)
+        List<VerbRow> randomVerbs = generateRandomIntegers(new HashSet<>(), verbRows.size(), NUMBER_OF_VERBS)
                 .stream()
-                .map(allVerbs::get)
+                .map(verbRows::get)
                 .collect(Collectors.toList());
 
-        List<NounRow> randomNouns = generateRandomIntegers(new HashSet<>(), allNouns.size(), NUMBER_OF_NOUNS)
+        List<NounRow> randomNouns = generateRandomIntegers(new HashSet<>(), nounRows.size(), NUMBER_OF_NOUNS)
                 .stream()
-                .map(allNouns::get)
+                .map(nounRows::get)
                 .collect(Collectors.toList());
 
         return new Test(randomVerbs, randomNouns);

@@ -1,9 +1,7 @@
 package application.transformer;
 
 import application.model.NounRow;
-import application.model.NounSheet;
 import application.model.VerbRow;
-import application.model.VerbSheet;
 import application.utility.SheetsRetriever;
 import com.google.common.collect.ImmutableList;
 import org.junit.Before;
@@ -42,20 +40,16 @@ public class ResponseToSheetTransformerTest {
     @Test
     public void transformToVerbSheet() {
         when(sheetsRetriever.getValuesFromSheet(SHEET)).thenReturn(verbList);
-        VerbSheet verbSheet = transformer.transformToVerbSheet(SHEET);
+        List<VerbRow> verbRows = transformer.transformToVerbSheet(SHEET);
 
-        List<VerbRow> values = verbSheet.getValues();
-
-        assertThat(values.size()).isEqualTo(2);
+        assertThat(verbRows.size()).isEqualTo(2);
     }
 
     @Test
     public void transformToNounSheet() {
         when(sheetsRetriever.getValuesFromSheet(SHEET)).thenReturn(nounList);
-        NounSheet nounSheet = transformer.transformToNounSheet(SHEET);
+        List<NounRow> nounRows = transformer.transformToNounSheet(SHEET);
 
-        List<NounRow> values = nounSheet.getValues();
-
-        assertThat(values.size()).isEqualTo(2);
+        assertThat(nounRows.size()).isEqualTo(2);
     }
 }
