@@ -14,6 +14,7 @@ import com.google.api.services.sheets.v4.SheetsScopes;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Collections;
@@ -30,7 +31,7 @@ public class SheetsConfiguration {
     /**
      * Directory to store user credentials for this application.
      */
-    private static final java.io.File DATA_STORE_DIR = new java.io.File(
+    private static final File DATA_STORE_DIR = new File(
             System.getProperty("user.home"), ".credentials/deutsch-lernen");
 
     /**

@@ -35,14 +35,14 @@ public class TestGenerator {
         return new Test(randomVerbs, randomNouns);
     }
 
-    private Set<Integer> generateRandomIntegers(Set<Integer> numbers, int numbersOfVerbs, int desiredSize) {
-        if (numbers.size() == desiredSize || numbers.size() == numbersOfVerbs) {
+    private Set<Integer> generateRandomIntegers(Set<Integer> numbers, int totalNumberOfElements, int desiredSize) {
+        if (numbers.size() == desiredSize || numbers.size() == totalNumberOfElements) {
             return numbers;
         } else {
             Random rand = new Random();
-            int n = rand.nextInt(numbersOfVerbs);
+            int n = rand.nextInt(totalNumberOfElements);
             numbers.add(n);
-            return generateRandomIntegers(numbers, numbersOfVerbs, desiredSize);
+            return generateRandomIntegers(numbers, totalNumberOfElements, desiredSize);
         }
     }
 }
