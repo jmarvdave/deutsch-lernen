@@ -1,7 +1,4 @@
 language: java
-env:
-  global:
-    - CODECOV_TOKEN="81b6a8e8-7f58-41af-acae-e021c08b36e2"
 notifications:
   email:
     on_success: always
