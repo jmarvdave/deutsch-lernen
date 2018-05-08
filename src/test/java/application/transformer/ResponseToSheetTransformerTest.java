@@ -27,9 +27,11 @@ public class ResponseToSheetTransformerTest {
 
     private final List<Object> firstVerbRow = ImmutableList.of("machen", "es wird gemacht", "oft benutzt Verb");
     private final List<Object> secondVerbRow = ImmutableList.of("anschalten", "es ist angechaltet", "ein Compter kann angeschaltet sein");
+    private final List<Object> thirdVerbRowWithNoNotes = ImmutableList.of("reinigen", "lass uns die Maschine reinigen");
     private final List<Object> firstNounRow = ImmutableList.of("Haus", "er wohnt in einem riesigen Haus", "Häuser sind bunt in Deutschland");
     private final List<Object> secondNounRow = ImmutableList.of("Bier", "das Bier schmeckt gut", "ohne Bier kann man nicht leben");
-    private final ImmutableList<List<Object>> verbList = ImmutableList.of(firstVerbRow, secondVerbRow);
+    private final ImmutableList<List<Object>> verbList1 = ImmutableList.of(firstVerbRow, secondVerbRow);
+    private final ImmutableList<List<Object>> verbList2 = ImmutableList.of(firstVerbRow, secondVerbRow, thirdVerbRowWithNoNotes);
     private final ImmutableList<List<Object>> nounList = ImmutableList.of(firstNounRow, secondNounRow);
 
     @Before
@@ -39,7 +41,7 @@ public class ResponseToSheetTransformerTest {
 
     @Test
     public void transformToVerbSheet() {
-        when(sheetsRetriever.getValuesFromSheet(SHEET)).thenReturn(verbList);
+        when(sheetsRetriever.getValuesFromSheet(SHEET)).thenReturn(verbList1);
         List<VerbRow> verbRows = transformer.transformToVerbSheet(SHEET);
 
         assertThat(verbRows.size()).isEqualTo(2);
@@ -52,4 +54,13 @@ public class ResponseToSheetTransformerTest {
 
         assertThat(nounRows.size()).isEqualTo(2);
     }
+
+    @Test
+    public void handlesExceptionWhenNotesAreBlank() {
+        when(sheetsRetriever.getValuesFromSheet(SHEET)).thenReturn(verbList2);
+        List<VerbRow> verbRows = transformer.transformToVerbSheet(SHEET);
+
+        assertThat(verbRows.size()).isEqualTo(3);
+    }
+
 }
