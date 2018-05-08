@@ -1,3 +1,4 @@
+[![codecov](https://codecov.io/gh/jmarvdave/deutsch-lernen/branch/master/graph/badge.svg)](https://codecov.io/gh/jmarvdave/deutsch-lernen)
 [![Build Status](https://travis-ci.org/jmarvdave/deutsch-lernen.svg?branch=master)](https://travis-ci.org/jmarvdave/deutsch-lernen)
 
 # deutsch-lernen
