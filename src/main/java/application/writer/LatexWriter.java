@@ -9,7 +9,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -18,7 +17,7 @@ public class LatexWriter {
     private static final String BEGINNING = "\\documentclass{exam}\n" +
             "\\usepackage[utf8]{inputenc}\n" +
             "\\pagenumbering{gobble}\n" +
-            "\\rhead{" + LocalDate.of(2018, Month.MAY,11).format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + "}\n" +
+            "\\rhead{" + LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + "}\n" +
             "\\lhead{\\textsc{Prüfung:} Schreibe Sätze mit den folgenden Wörtern }\n" +
             "\\begin{document}\n" +
             "\\begin{questions}\n\n";
