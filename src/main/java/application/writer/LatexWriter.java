@@ -8,20 +8,17 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.Format;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class LatexWriter {
 
-    static Format formatter = new SimpleDateFormat("dd-MM-yyyy");
-
     private static final String BEGINNING = "\\documentclass{exam}\n" +
             "\\usepackage[utf8]{inputenc}\n" +
             "\\pagenumbering{gobble}\n" +
-            "\\rhead{" + formatter.format(LocalDate.of(2018, Month.MAY,12)) + "}\n" +
+            "\\rhead{" + LocalDate.of(2018, Month.MAY,12).format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + "}\n" +
             "\\lhead{\\textsc{Prüfung:} Schreibe Sätze mit den folgenden Wörtern }\n" +
             "\\begin{document}\n" +
             "\\begin{questions}\n\n";
