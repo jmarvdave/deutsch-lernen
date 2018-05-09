@@ -20,7 +20,7 @@ public class LatexWriter {
     private static final String BEGINNING = "\\documentclass{exam}\n" +
             "\\usepackage[utf8]{inputenc}\n" +
             "\\pagenumbering{gobble}\n" +
-            "\\rhead{" + formatter.format(new Date(2018,5,10)) + "}\n" +
+            "\\rhead{" + formatter.format(new Date(2018,5,11)) + "}\n" +
             "\\lhead{\\textsc{Prüfung:} Schreibe Sätze mit den folgenden Wörtern }\n" +
             "\\begin{document}\n" +
             "\\begin{questions}\n\n";
