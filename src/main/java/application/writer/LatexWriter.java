@@ -10,7 +10,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.Format;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 
 public class LatexWriter {
@@ -20,7 +21,7 @@ public class LatexWriter {
     private static final String BEGINNING = "\\documentclass{exam}\n" +
             "\\usepackage[utf8]{inputenc}\n" +
             "\\pagenumbering{gobble}\n" +
-            "\\rhead{" + formatter.format(new Date(2018,4,11)) + "}\n" +
+            "\\rhead{" + formatter.format(LocalDate.of(2018, Month.MAY,12)) + "}\n" +
             "\\lhead{\\textsc{Prüfung:} Schreibe Sätze mit den folgenden Wörtern }\n" +
             "\\begin{document}\n" +
             "\\begin{questions}\n\n";
