@@ -26,7 +26,9 @@ public class SheetsRetriever {
 
     private List<List<Object>> getResponseFromService(String sheetId) throws IOException {
         String range = "A2:E";
-        ValueRange response = sheetsService.spreadsheets().values()
+        ValueRange response = sheetsService
+                .spreadsheets()
+                .values()
                 .get(sheetId, range)
                 .execute();
 
