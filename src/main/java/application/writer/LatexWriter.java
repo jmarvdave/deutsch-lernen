@@ -16,6 +16,7 @@ public class LatexWriter {
 
     private static final String BEGINNING = "\\documentclass{exam}\n" +
             "\\usepackage[utf8]{inputenc}\n" +
+            "\\usepackage[bottom=0.0in,top=0.5in]{geometry}\n" +
             "\\pagenumbering{gobble}\n" +
             "\\rhead{" + LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + "}\n" +
             "\\lhead{\\textsc{Prüfung:} Schreibe Sätze mit den folgenden Wörtern }\n" +

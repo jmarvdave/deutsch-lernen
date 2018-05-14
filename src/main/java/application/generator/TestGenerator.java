@@ -11,8 +11,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class TestGenerator {
-    private static final int NUMBER_OF_VERBS = 14;
-    private static final int NUMBER_OF_NOUNS = 4;
+    private static final int NUMBER_OF_VERBS = 15;
+    private static final int NUMBER_OF_NOUNS = 5;
     private final List<VerbRow> verbRows;
     private final List<NounRow> nounRows;
 
