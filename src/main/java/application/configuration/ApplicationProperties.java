@@ -8,7 +8,7 @@ public class ApplicationProperties {
     @Value("${app.date}")
     private String date;
 
-    String getDate() {
+    public String getDate() {
         return date;
     }
 }
