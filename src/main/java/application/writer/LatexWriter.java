@@ -40,7 +40,7 @@ public class LatexWriter {
             "\\end{document}";
 
     public void writeTestToFile(List<VerbRow> verbs, List<NounRow> nouns) {
-        writer.withBufferedWriter((bufferedWriter) -> {
+        Writer.withBufferedWriter((bufferedWriter) -> {
             writer.writeToFile(bufferedWriter, beginning(date));
 
             verbs.forEach((verb) -> writer.writeToFile(bufferedWriter, String.format(VERB, verb.getVerb())));
