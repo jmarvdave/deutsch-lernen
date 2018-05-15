@@ -8,20 +8,26 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class LatexWriter {
 
-    private static final String BEGINNING = "\\documentclass{exam}\n" +
-            "\\usepackage[utf8]{inputenc}\n" +
-            "\\usepackage[bottom=0.0in,top=0.5in]{geometry}\n" +
-            "\\pagenumbering{gobble}\n" +
-            "\\rhead{" + LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + "}\n" +
-            "\\lhead{\\textsc{Prüfung:} Schreibe Sätze mit den folgenden Wörtern }\n" +
-            "\\begin{document}\n" +
-            "\\begin{questions}\n\n";
+    private final String date;
+
+    public LatexWriter(String date) {
+        this.date = date;
+    }
+
+    private String beginning(String date) {
+        return "\\documentclass{exam}\n" +
+                "\\usepackage[utf8]{inputenc}\n" +
+                "\\usepackage[bottom=0.0in,top=0.5in]{geometry}\n" +
+                "\\pagenumbering{gobble}\n" +
+                "\\rhead{" + date + "}\n" +
+                "\\lhead{\\textsc{Prüfung:} Schreibe Sätze mit den folgenden Wörtern }\n" +
+                "\\begin{document}\n" +
+                "\\begin{questions}\n\n";
+    }
 
     private static final String VERB = "\\question %s\n" +
             "\\vspace{1.5\\baselineskip}\n\n";
@@ -35,7 +41,7 @@ public class LatexWriter {
     public void writeTestToFile(List<VerbRow> verbs, List<NounRow> nouns) {
         Path path = Paths.get("testing.tex");
         try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path);) {
-            write(() -> bufferedWriter.write(BEGINNING));
+            write(() -> bufferedWriter.write(beginning(date)));
 
             verbs.forEach((verb) -> {
                 write(() -> bufferedWriter.write(String.format(VERB, verb.getVerb())));

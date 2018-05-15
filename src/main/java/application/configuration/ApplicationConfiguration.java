@@ -13,6 +13,7 @@ public class ApplicationConfiguration {
     private final ResponseToSheetTransformer transformer;
     private final LatexWriter latexWriter;
 
+
     @Autowired
     public ApplicationConfiguration(ResponseToSheetTransformer transformer, LatexWriter latexWriter) {
         this.transformer = transformer;
