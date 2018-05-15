@@ -18,7 +18,7 @@ public class DateRetrieverTest {
     private DateRetriever dateRetriever;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         dateRetriever = new DateRetriever(applicationProperties);
     }
 

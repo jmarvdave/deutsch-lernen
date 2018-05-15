@@ -40,34 +40,31 @@ public class LatexWriter {
 
     public void writeTestToFile(List<VerbRow> verbs, List<NounRow> nouns) {
         Path path = Paths.get("testing.tex");
-        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path);) {
-            write(() -> bufferedWriter.write(beginning(date)));
 
-            verbs.forEach((verb) -> {
-                write(() -> bufferedWriter.write(String.format(VERB, verb.getVerb())));
-            });
+        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path);) {
+            writeToFile(bufferedWriter, beginning(date));
+
+            verbs.forEach((verb) -> writeToFile(bufferedWriter, String.format(VERB, verb.getVerb())));
 
             nouns.forEach((noun) -> {
-                write(() -> {
-                    if (nouns.indexOf(noun) != nouns.size() - 1) {
-                        bufferedWriter.write(String.format(NOUN, noun.getNoun()));
-                    } else {
-                        bufferedWriter.write(String.format(LAST_NOUN, noun.getNoun()));
-                    }
-                });
+                if (nouns.indexOf(noun) == nouns.size() - 1) {
+                    writeToFile(bufferedWriter, String.format(LAST_NOUN, noun.getNoun()));
+                } else {
+                    writeToFile(bufferedWriter, String.format(NOUN, noun.getNoun()));
+                }
             });
 
-            write(() -> bufferedWriter.write(ENDING));
+            bufferedWriter.write(ENDING);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void write(BufferedWriterConsumer action) {
+    private void writeToFile(BufferedWriter bufferedWriter, String content) {
         try {
-            action.writeOutput();
+            bufferedWriter.write(content);
         } catch (IOException e) {
-            System.err.println(e);
+            System.err.println(e.getMessage());
         }
     }
 }
