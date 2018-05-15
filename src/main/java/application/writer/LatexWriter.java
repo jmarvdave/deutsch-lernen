@@ -3,19 +3,20 @@ package application.writer;
 import application.model.NounRow;
 import application.model.VerbRow;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 public class LatexWriter {
 
     private final String date;
+    private final Writer writer;
 
     public LatexWriter(String date) {
+        this(date, new Writer());
+    }
+
+    public LatexWriter(String date, Writer writer) {
         this.date = date;
+        this.writer = writer;
     }
 
     private String beginning(String date) {
@@ -39,32 +40,22 @@ public class LatexWriter {
             "\\end{document}";
 
     public void writeTestToFile(List<VerbRow> verbs, List<NounRow> nouns) {
-        Path path = Paths.get("testing.tex");
+        writer.withBufferedWriter((bufferedWriter) -> {
+            writer.writeToFile(bufferedWriter, beginning(date));
 
-        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path);) {
-            writeToFile(bufferedWriter, beginning(date));
-
-            verbs.forEach((verb) -> writeToFile(bufferedWriter, String.format(VERB, verb.getVerb())));
+            verbs.forEach((verb) -> writer.writeToFile(bufferedWriter, String.format(VERB, verb.getVerb())));
 
             nouns.forEach((noun) -> {
                 if (nouns.indexOf(noun) == nouns.size() - 1) {
-                    writeToFile(bufferedWriter, String.format(LAST_NOUN, noun.getNoun()));
+                    writer.writeToFile(bufferedWriter, String.format(LAST_NOUN, noun.getNoun()));
                 } else {
-                    writeToFile(bufferedWriter, String.format(NOUN, noun.getNoun()));
+                    writer.writeToFile(bufferedWriter, String.format(NOUN, noun.getNoun()));
                 }
             });
 
-            bufferedWriter.write(ENDING);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            writer.writeToFile(bufferedWriter, ENDING);
+        });
     }
 
-    private void writeToFile(BufferedWriter bufferedWriter, String content) {
-        try {
-            bufferedWriter.write(content);
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-        }
-    }
+
 }
