@@ -27,7 +27,7 @@ public class WriterTest {
         Writer.withBufferedWriter(bufferedWriter -> writer.writeToFile(bufferedWriter, "testing"), "testfile.tex");
 
         try {
-            String fileName = "testing.tex";
+            String fileName = "testfile.tex";
             List<String> lines = Files.readAllLines(Paths.get(fileName));
             assertThat(lines.get(0)).isEqualTo("testing");
         } catch (IOException e1) {

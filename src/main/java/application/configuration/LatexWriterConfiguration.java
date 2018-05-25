@@ -12,7 +12,11 @@ public class LatexWriterConfiguration {
 
     @Autowired
     public LatexWriterConfiguration(ApplicationProperties applicationProperties) {
-        this.dateRetriever = new DateRetriever(applicationProperties);
+        this(new DateRetriever(applicationProperties));
+    }
+
+    public LatexWriterConfiguration(DateRetriever dateRetriever) {
+        this.dateRetriever = dateRetriever;
     }
 
     @Bean
