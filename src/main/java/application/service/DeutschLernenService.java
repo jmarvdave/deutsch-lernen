@@ -28,6 +28,6 @@ public class DeutschLernenService {
         List<NounRow> nounRows = transformer.transformToNounSheet(NOUN_SHEET_ID);
 
         Test test = new TestGenerator(verbRows, nounRows).generate();
-        writer.writeTestToFile(test.getRandomVerbs(), test.getRandomNouns());
+        writer.writeTestToFile(test.getRandomVerbs(), test.getRandomNouns(), "testing.tex");
     }
 }

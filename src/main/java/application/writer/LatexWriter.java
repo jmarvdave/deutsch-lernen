@@ -39,7 +39,7 @@ public class LatexWriter {
     private static final String ENDING = "\\end{questions}\n" +
             "\\end{document}";
 
-    public void writeTestToFile(List<VerbRow> verbs, List<NounRow> nouns) {
+    public void writeTestToFile(List<VerbRow> verbs, List<NounRow> nouns, String fileName) {
         Writer.withBufferedWriter((bufferedWriter) -> {
             writer.writeToFile(bufferedWriter, beginning(date));
 
@@ -54,7 +54,7 @@ public class LatexWriter {
             });
 
             writer.writeToFile(bufferedWriter, ENDING);
-        }, "testing.tex");
+        }, fileName);
     }
 
 
