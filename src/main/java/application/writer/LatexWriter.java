@@ -54,7 +54,7 @@ public class LatexWriter {
             });
 
             writer.writeToFile(bufferedWriter, ENDING);
-        });
+        }, "testing.tex");
     }
 
 

@@ -8,8 +8,8 @@ import java.nio.file.Paths;
 import java.util.function.Consumer;
 
 class Writer {
-    static void withBufferedWriter(Consumer<BufferedWriter> consumer) {
-        Path path = Paths.get("testing.tex");
+    static void withBufferedWriter(Consumer<BufferedWriter> consumer, String fileName) {
+        Path path = Paths.get(fileName);
 
         try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path);) {
             consumer.accept(bufferedWriter);
