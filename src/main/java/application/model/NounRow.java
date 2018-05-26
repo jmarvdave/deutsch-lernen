@@ -11,16 +11,8 @@ public class NounRow {
         this.example = example;
     }
 
-    public String getGender() {
-        return gender;
-    }
-
     public String getNoun() {
         return noun;
-    }
-
-    public String getExample() {
-        return example;
     }
 
     @Override

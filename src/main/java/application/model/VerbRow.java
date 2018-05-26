@@ -15,14 +15,6 @@ public class VerbRow {
         return verb;
     }
 
-    public String getSentence() {
-        return sentence;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
     @Override
     public String toString() {
         return "VerbRow{" +
