@@ -1,6 +1,6 @@
 package application.model;
 
-public class VerbRow extends SheetRow {
+public class VerbRow {
     private final String verb;
     private final String sentence;
     private final String notes;

@@ -32,7 +32,7 @@ public class TestGenerator {
                 .map(nounRows::get)
                 .collect(Collectors.toList());
 
-        return new Test(randomVerbs, randomNouns);
+        return Test.from(randomVerbs, randomNouns);
     }
 
     private Set<Integer> generateRandomIntegers(Set<Integer> numbers, int totalNumberOfElements, int desiredSize) {

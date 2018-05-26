@@ -1,6 +1,6 @@
 package application.model;
 
-public class NounRow extends SheetRow {
+public class NounRow {
     private final String gender;
     private final String noun;
     private final String example;
