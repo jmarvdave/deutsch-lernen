@@ -2,7 +2,10 @@ package integration;
 
 import application.configuration.ApplicationConfiguration;
 import application.configuration.ApplicationProperties;
+import application.configuration.CredentialAuthorizer;
 import application.configuration.LatexWriterConfiguration;
+import application.configuration.SheetsConfiguration;
+import application.configuration.SheetsConnector;
 import application.model.NounRow;
 import application.model.VerbRow;
 import application.service.DeutschLernenService;
@@ -36,19 +39,32 @@ public class DeutschLernenIntegrationTest {
     @MockBean
     private ApplicationProperties applicationProperties;
 
+    @MockBean
+    private SheetsConfiguration sheetsConfiguration;
+
+    @MockBean
+    private CredentialAuthorizer credentialAuthorizer;
+
+    @MockBean
+    private SheetsConnector sheetsConnector;
+
     @Test
     public void integrationTest() throws IOException {
+        //prepares the sheet transformer
+        List<VerbRow> listOfVerbs = ImmutableList.of(new VerbRow("machen", "Ich mache es", "wie schaffen"));
+        List<NounRow> listOfNouns = ImmutableList.of(new NounRow("der", "Mann", "der Mann ist albern"));
+        when(responseToSheetTransformer.transformToVerbSheet(VERB_SHEET_ID)).thenReturn(listOfVerbs);
+        when(responseToSheetTransformer.transformToNounSheet(NOUN_SHEET_ID)).thenReturn(listOfNouns);
+
+        //google sheets configurations
+        when(sheetsConfiguration.transformer(credentialAuthorizer, sheetsConnector)).thenReturn(responseToSheetTransformer);
+
+        //prepares the latex writer
         when(applicationProperties.getDate()).thenReturn("1992-03-23");
         LatexWriterConfiguration latexWriterConfiguration = new LatexWriterConfiguration(applicationProperties);
         LatexWriter latexWriter = latexWriterConfiguration.latexWriter();
 
-        List<VerbRow> listOfVerbs = ImmutableList.of(new VerbRow("machen", "Ich mache es", "wie schaffen"));
-        List<NounRow> listOfNouns = ImmutableList.of(new NounRow("der", "Mann", "der Mann ist albern"));
-
-        when(responseToSheetTransformer.transformToVerbSheet(VERB_SHEET_ID)).thenReturn(listOfVerbs);
-        when(responseToSheetTransformer.transformToNounSheet(NOUN_SHEET_ID)).thenReturn(listOfNouns);
-
-        ApplicationConfiguration applicationConfiguration = new ApplicationConfiguration(responseToSheetTransformer, latexWriter);
+        ApplicationConfiguration applicationConfiguration = new ApplicationConfiguration(sheetsConfiguration.transformer(credentialAuthorizer, sheetsConnector), latexWriter);
 
         DeutschLernenService application = applicationConfiguration.application();
 
