@@ -1,6 +1,8 @@
 package integration;
 
 import application.configuration.ApplicationConfiguration;
+import application.configuration.ApplicationProperties;
+import application.configuration.LatexWriterConfiguration;
 import application.model.NounRow;
 import application.model.VerbRow;
 import application.service.DeutschLernenService;
@@ -31,9 +33,14 @@ public class DeutschLernenIntegrationTest {
     @MockBean
     private ResponseToSheetTransformer responseToSheetTransformer;
 
+    @MockBean
+    private ApplicationProperties applicationProperties;
+
     @Test
     public void integrationTest() throws IOException {
-        LatexWriter latexWriter = new LatexWriter("23-03-1992");
+        when(applicationProperties.getDate()).thenReturn("1992-03-23");
+        LatexWriterConfiguration latexWriterConfiguration = new LatexWriterConfiguration(applicationProperties);
+        LatexWriter latexWriter = latexWriterConfiguration.latexWriter();
 
         List<VerbRow> listOfVerbs = ImmutableList.of(new VerbRow("machen", "Ich mache es", "wie schaffen"));
         List<NounRow> listOfNouns = ImmutableList.of(new NounRow("der", "Mann", "der Mann ist albern"));
