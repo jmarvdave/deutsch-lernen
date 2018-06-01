@@ -1,5 +1,6 @@
 package integration;
 
+import application.configuration.ApplicationConfiguration;
 import application.model.NounRow;
 import application.model.VerbRow;
 import application.service.DeutschLernenService;
@@ -40,9 +41,11 @@ public class DeutschLernenIntegrationTest {
         when(responseToSheetTransformer.transformToVerbSheet(VERB_SHEET_ID)).thenReturn(listOfVerbs);
         when(responseToSheetTransformer.transformToNounSheet(NOUN_SHEET_ID)).thenReturn(listOfNouns);
 
-        DeutschLernenService deutschLernenService = new DeutschLernenService(responseToSheetTransformer, latexWriter);
+        ApplicationConfiguration applicationConfiguration = new ApplicationConfiguration(responseToSheetTransformer, latexWriter);
 
-        deutschLernenService.run();
+        DeutschLernenService application = applicationConfiguration.application();
+
+        application.run();
 
         List<String> lines = Files.readAllLines(Paths.get("testing.tex"));
         assertThat(lines.contains("\\question machen")).isTrue();
