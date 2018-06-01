@@ -10,6 +10,12 @@ import java.io.IOException;
 
 @Configuration
 public class SheetsConfiguration {
+    
+    @Bean
+    public CredentialAuthorizer credentialAuthorizer() {
+        return new CredentialAuthorizer();
+    }
+
     @Bean
     public ResponseToSheetTransformer transformer(CredentialAuthorizer credentialAuthorizer, SheetsConnector sheetsConnector) throws IOException {
         Credential credential = credentialAuthorizer.authorize();
