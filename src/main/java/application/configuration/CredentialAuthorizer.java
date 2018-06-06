@@ -9,15 +9,19 @@ import java.io.IOException;
 import java.util.Collections;
 
 public class CredentialAuthorizer {
-    /**
-     * Creates an authorized Credential object.
-     *
-     * @return an authorized Credential object.
-     * @throws IOException
-     */
+    private final String credentialLocation;
+
+    CredentialAuthorizer(String credentialLocation) {
+        this.credentialLocation = credentialLocation;
+    }
+
+    static CredentialAuthorizer createWithDefaultCredentiaLocation() {
+        return new CredentialAuthorizer("serviceclient.json");
+    }
+
     Credential authorize() throws IOException {
         // Load client secrets.
-        GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream("serviceclient.json"))
+        GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream(credentialLocation))
                 .createScoped(Collections.singleton(SheetsScopes.SPREADSHEETS_READONLY));
         return credential;
     }

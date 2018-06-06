@@ -13,7 +13,7 @@ public class SheetsConfiguration {
     
     @Bean
     public CredentialAuthorizer credentialAuthorizer() {
-        return new CredentialAuthorizer();
+        return CredentialAuthorizer.createWithDefaultCredentiaLocation();
     }
 
     @Bean
