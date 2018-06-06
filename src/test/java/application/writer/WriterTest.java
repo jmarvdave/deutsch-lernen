@@ -18,13 +18,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(MockitoJUnitRunner.class)
 public class WriterTest {
 
+    @Mock
+    private BufferedWriter bufferedWriter;
+
     private Writer writer;
-
-    @Mock
-    BufferedWriter bufferedWriter;
-
-    @Mock
-    Writer mockedWriter;
 
     @Before
     public void setUp() {
@@ -46,7 +43,7 @@ public class WriterTest {
 
     @Test
     public void catchesIOExceptionWhenUnableToWrite() throws IOException {
-        Mockito.doThrow(new IOException()).when(bufferedWriter).write("blah");
-        mockedWriter.writeToFile(bufferedWriter, "blah");
+        Mockito.doThrow(new IOException("testing exception")).when(bufferedWriter).write("blah");
+        writer.writeToFile(bufferedWriter, "blah");
     }
 }
