@@ -3,8 +3,11 @@ package application.writer;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -16,6 +19,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class WriterTest {
 
     private Writer writer;
+
+    @Mock
+    BufferedWriter bufferedWriter;
+
+    @Mock
+    Writer mockedWriter;
 
     @Before
     public void setUp() {
@@ -33,5 +42,11 @@ public class WriterTest {
         } catch (IOException e1) {
             e1.printStackTrace();
         }
+    }
+
+    @Test
+    public void catchesIOExceptionWhenUnableToWrite() throws IOException {
+        Mockito.doThrow(new IOException()).when(bufferedWriter).write("blah");
+        mockedWriter.writeToFile(bufferedWriter, "blah");
     }
 }
