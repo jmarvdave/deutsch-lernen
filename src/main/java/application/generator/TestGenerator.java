@@ -4,6 +4,7 @@ import application.model.NounRow;
 import application.model.Test;
 import application.model.VerbRow;
 
+import java.security.SecureRandom;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -39,7 +40,7 @@ public class TestGenerator {
         if (numbers.size() == desiredSize || numbers.size() == totalNumberOfElements) {
             return numbers;
         } else {
-            Random rand = new Random();
+            Random rand = new SecureRandom();
             int n = rand.nextInt(totalNumberOfElements);
             numbers.add(n);
             return generateRandomIntegers(numbers, totalNumberOfElements, desiredSize);
