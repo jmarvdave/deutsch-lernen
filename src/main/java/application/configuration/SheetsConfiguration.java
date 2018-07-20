@@ -25,7 +25,7 @@ public class SheetsConfiguration {
     }
 
     @Bean
-    public ResultsWeigher resultsWeighter() {
+    public ResultsWeigher resultsWeigher() {
         return new ResultsWeigher();
     }
 }
