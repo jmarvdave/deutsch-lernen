@@ -1,7 +1,7 @@
 package application.generator;
 
-import application.model.NounRow;
-import application.model.VerbRow;
+import application.model.Row;
+import application.model.Row.TYPE;
 import com.google.common.collect.ImmutableList;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,20 +17,22 @@ public class TestGeneratorTest {
 
     @Before
     public void setUp() {
-        VerbRow verbRow1 = new VerbRow("machen","ich mache es", "machen ist sehr oft benützt");
-        VerbRow verbRow2 = new VerbRow("lachen","wir lachen zu viel", "lächeln ist nicht das gleiche Ding");
-        NounRow nounRow = new NounRow("der","Laptop", "wird bearbeitet");
+        Row verbRow1 = new Row("machen", TYPE.VERB);
+        Row verbRow2 = new Row("lachen", TYPE.VERB);
+        Row nounRow1 = new Row("Laptop", TYPE.NOUN);
+        Row nounRow2 = new Row("Gabel", TYPE.NOUN);
+        Row nounRow3 = new Row("Messer", TYPE.NOUN);
 
-        ImmutableList<VerbRow> verbRows = ImmutableList.of(verbRow1, verbRow2);
-        ImmutableList<NounRow> nounRows = ImmutableList.of(nounRow);
+        ImmutableList<Row> verbRows = ImmutableList.of(verbRow1, verbRow2, verbRow2);
+        ImmutableList<Row> nounRows = ImmutableList.of(nounRow1, nounRow2, nounRow3, nounRow3, nounRow3);
         testGenerator = new TestGenerator(verbRows, nounRows);
     }
 
     @Test
     public void testGenerate() {
-        application.model.Test generatedTest = testGenerator.generate();
+        application.model.Test generatedTest = testGenerator.generate(2, 3);
 
         assertThat(generatedTest.getRandomVerbs().size()).isEqualTo(2);
-        assertThat(generatedTest.getRandomNouns().size()).isEqualTo(1);
+        assertThat(generatedTest.getRandomNouns().size()).isEqualTo(3);
     }
 }

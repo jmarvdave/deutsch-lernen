@@ -1,7 +1,6 @@
 package application.transformer;
 
-import application.model.NounRow;
-import application.model.VerbRow;
+import application.model.Row;
 import application.utility.SheetsRetriever;
 import com.google.common.collect.ImmutableList;
 import org.junit.Before;
@@ -42,7 +41,7 @@ public class ResponseToSheetTransformerTest {
     @Test
     public void transformToVerbSheet() {
         when(sheetsRetriever.getValuesFromSheet(SHEET)).thenReturn(verbList1);
-        List<VerbRow> verbRows = transformer.transformToVerbSheet(SHEET);
+        List<Row> verbRows = transformer.transformToVerbSheet(SHEET);
 
         assertThat(verbRows.size()).isEqualTo(2);
     }
@@ -50,7 +49,7 @@ public class ResponseToSheetTransformerTest {
     @Test
     public void transformToNounSheet() {
         when(sheetsRetriever.getValuesFromSheet(SHEET)).thenReturn(nounList);
-        List<NounRow> nounRows = transformer.transformToNounSheet(SHEET);
+        List<Row> nounRows = transformer.transformToNounSheet(SHEET);
 
         assertThat(nounRows.size()).isEqualTo(2);
     }
@@ -58,7 +57,7 @@ public class ResponseToSheetTransformerTest {
     @Test
     public void handlesExceptionWhenNotesAreBlank() {
         when(sheetsRetriever.getValuesFromSheet(SHEET)).thenReturn(verbList2);
-        List<VerbRow> verbRows = transformer.transformToVerbSheet(SHEET);
+        List<Row> verbRows = transformer.transformToVerbSheet(SHEET);
 
         assertThat(verbRows.size()).isEqualTo(3);
     }

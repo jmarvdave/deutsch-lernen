@@ -6,9 +6,9 @@ import application.configuration.CredentialAuthorizer;
 import application.configuration.LatexWriterConfiguration;
 import application.configuration.SheetsConfiguration;
 import application.configuration.SheetsConnector;
-import application.model.NounRow;
-import application.model.VerbRow;
+import application.model.Row;
 import application.service.DeutschLernenService;
+import application.service.ResultsWeigher;
 import application.transformer.ResponseToSheetTransformer;
 import application.writer.LatexWriter;
 import com.google.common.collect.ImmutableList;
@@ -46,15 +46,20 @@ public class DeutschLernenIntegrationTest {
     private CredentialAuthorizer credentialAuthorizer;
 
     @MockBean
+    private ResultsWeigher resultsWeigher;
+
+    @MockBean
     private SheetsConnector sheetsConnector;
 
     @Test
     public void integrationTest() throws IOException {
         //prepares the sheet transformer
-        List<VerbRow> listOfVerbs = ImmutableList.of(new VerbRow("machen", "Ich mache es", "wie schaffen"));
-        List<NounRow> listOfNouns = ImmutableList.of(new NounRow("der", "Mann", "der Mann ist albern"));
+        List<Row> listOfVerbs = ImmutableList.of(new Row("machen", Row.TYPE.VERB));
+        List<Row> listOfNouns = ImmutableList.of(new Row( "Mann", Row.TYPE.NOUN));
         when(responseToSheetTransformer.transformToVerbSheet(VERB_SHEET_ID)).thenReturn(listOfVerbs);
+        when(resultsWeigher.apply(listOfVerbs)).thenReturn(listOfVerbs);
         when(responseToSheetTransformer.transformToNounSheet(NOUN_SHEET_ID)).thenReturn(listOfNouns);
+        when(resultsWeigher.apply(listOfNouns)).thenReturn(listOfNouns);
 
         //google sheets configurations
         when(sheetsConfiguration.transformer(credentialAuthorizer, sheetsConnector)).thenReturn(responseToSheetTransformer);
@@ -64,7 +69,7 @@ public class DeutschLernenIntegrationTest {
         LatexWriterConfiguration latexWriterConfiguration = new LatexWriterConfiguration(applicationProperties);
         LatexWriter latexWriter = latexWriterConfiguration.latexWriter();
 
-        ApplicationConfiguration applicationConfiguration = new ApplicationConfiguration(sheetsConfiguration.transformer(credentialAuthorizer, sheetsConnector), latexWriter);
+        ApplicationConfiguration applicationConfiguration = new ApplicationConfiguration(sheetsConfiguration.transformer(credentialAuthorizer, sheetsConnector), latexWriter, resultsWeigher);
 
         DeutschLernenService application = applicationConfiguration.application();
 
