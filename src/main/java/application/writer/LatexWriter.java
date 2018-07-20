@@ -1,7 +1,6 @@
 package application.writer;
 
-import application.model.NounRow;
-import application.model.VerbRow;
+import application.model.Row;
 
 import java.util.List;
 
@@ -39,17 +38,17 @@ public class LatexWriter {
     private static final String ENDING = "\\end{questions}\n" +
             "\\end{document}";
 
-    public void writeTestToFile(List<VerbRow> verbs, List<NounRow> nouns, String fileName) {
+    public void writeTestToFile(List<Row> verbs, List<Row> nouns, String fileName) {
         Writer.withBufferedWriter((bufferedWriter) -> {
             writer.writeToFile(bufferedWriter, beginning(date));
 
-            verbs.forEach((verb) -> writer.writeToFile(bufferedWriter, String.format(VERB, verb.getVerb())));
+            verbs.forEach((verb) -> writer.writeToFile(bufferedWriter, String.format(VERB, verb.getPrimaryElement())));
 
             nouns.forEach((noun) -> {
                 if (nouns.indexOf(noun) == nouns.size() - 1) {
-                    writer.writeToFile(bufferedWriter, String.format(LAST_NOUN, noun.getNoun()));
+                    writer.writeToFile(bufferedWriter, String.format(LAST_NOUN, noun.getPrimaryElement()));
                 } else {
-                    writer.writeToFile(bufferedWriter, String.format(NOUN, noun.getNoun()));
+                    writer.writeToFile(bufferedWriter, String.format(NOUN, noun.getPrimaryElement()));
                 }
             });
 

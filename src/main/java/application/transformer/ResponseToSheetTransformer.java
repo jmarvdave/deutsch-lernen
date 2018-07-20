@@ -1,7 +1,7 @@
 package application.transformer;
 
-import application.model.NounRow;
-import application.model.VerbRow;
+import application.model.Row;
+import application.model.Row.TYPE;
 import application.utility.SheetsRetriever;
 import com.google.common.collect.ImmutableList;
 
@@ -16,24 +16,22 @@ public class ResponseToSheetTransformer {
         this.sheetsRetriever = sheetsRetriever;
     }
 
-    public List<VerbRow> transformToVerbSheet(String sheetId) {
+    public List<Row> transformToVerbSheet(String sheetId) {
         List<List<Object>> values = sheetsRetriever.getValuesFromSheet(sheetId);
-        List<VerbRow> rows = values
+        return values
                 .stream()
                 .map(convertToRowModel())
-                .map(row -> new VerbRow(row.get(0), row.get(1), row.get(2)))
+                .map(row -> new Row(row.get(0), TYPE.VERB))
                 .collect(Collectors.toList());
-        return rows;
     }
 
-    public List<NounRow> transformToNounSheet(String sheetId) {
+    public List<Row> transformToNounSheet(String sheetId) {
         List<List<Object>> values = sheetsRetriever.getValuesFromSheet(sheetId);
-        List<NounRow> rows = values
+        return values
                 .stream()
                 .map(convertToRowModel())
-                .map(row -> new NounRow(row.get(0), row.get(1), row.get(2)))
+                .map(row -> new Row(row.get(1), TYPE.NOUN))
                 .collect(Collectors.toList());
-        return rows;
     }
 
     private Function<List<Object>, List<String>> convertToRowModel() {

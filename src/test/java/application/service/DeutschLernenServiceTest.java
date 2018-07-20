@@ -19,9 +19,12 @@ public class DeutschLernenServiceTest {
     @Mock
     private LatexWriter writer;
 
+    @Mock
+    private ResultsWeigher resultsWeigher;
+
     @Test
     public void run() {
-        DeutschLernenService service = new DeutschLernenService(transformer, writer);
+        DeutschLernenService service = new DeutschLernenService(transformer, writer, resultsWeigher);
 
         service.run();
 

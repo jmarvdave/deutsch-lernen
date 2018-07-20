@@ -3,23 +3,23 @@ package application.model;
 import java.util.List;
 
 public class Test {
-    private final List<VerbRow> randomVerbs;
-    private final List<NounRow> randomNouns;
+    private final List<Row> randomVerbs;
+    private final List<Row> randomNouns;
 
-    public List<VerbRow> getRandomVerbs() {
+    public List<Row> getRandomVerbs() {
         return randomVerbs;
     }
 
-    public List<NounRow> getRandomNouns() {
+    public List<Row> getRandomNouns() {
         return randomNouns;
     }
 
-    private Test(List<VerbRow> randomVerbs, List<NounRow> randomNouns) {
+    private Test(List<Row> randomVerbs, List<Row> randomNouns) {
         this.randomVerbs = randomVerbs;
         this.randomNouns = randomNouns;
     }
 
-    public static Test from(List<VerbRow> randomVerbs, List<NounRow> randomNouns) {
+    public static Test from(List<Row> randomVerbs, List<Row> randomNouns) {
         return new Test(randomVerbs, randomNouns);
     }
 }
