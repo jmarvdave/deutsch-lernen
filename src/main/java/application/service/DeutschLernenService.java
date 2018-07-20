@@ -17,8 +17,8 @@ public class DeutschLernenService {
     private static final String VERB_SHEET_ID = "1MpUyZq-UDfvHAt2jZN45cEQnyeSk6Nr56_slyQUMcDI";
     private static final String NOUN_SHEET_ID = "1-JL2h2SrndIbNkOGJmueRxcZwqaSl90meGc6fkeJ-Go";
 
-    private static final int NUMBER_OF_VERBS = 15;
-    private static final int NUMBER_OF_NOUNS = 5;
+    private static final int NUMBER_OF_VERBS = 14;
+    private static final int NUMBER_OF_NOUNS = 6;
 
     public DeutschLernenService(ResponseToSheetTransformer transformer, LatexWriter writer, ResultsWeigher weighter) {
         this.transformer = transformer;
