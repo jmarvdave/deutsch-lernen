@@ -8,14 +8,15 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class GoogleSheetsConfiguration {
     @Bean
-    public CredentialAuthorizer credentialAuthorizer() {
-        return CredentialAuthorizer.createWithDefaultCredentiaLocation();
+    public GoogleCredentialAuthorizer credentialAuthorizer() {
+        return GoogleCredentialAuthorizer.createWithDefaultCredentiaLocation();
     }
 
     @Bean
-    public GoogleSheetsRetriever googleSheetsRetriever(CredentialAuthorizer credentialAuthorizer, GoogleSheetsConnector googleSheetsConnector)
+    public GoogleSheetsRetriever googleSheetsRetriever(
+        GoogleCredentialAuthorizer googleCredentialAuthorizer, GoogleSheetsConnector googleSheetsConnector)
         throws IOException {
-        Credential credential = credentialAuthorizer.authorize();
+        Credential credential = googleCredentialAuthorizer.authorize();
         return new GoogleSheetsRetriever(googleSheetsConnector.connect(credential));
     }
 }

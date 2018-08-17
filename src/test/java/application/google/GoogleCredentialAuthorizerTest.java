@@ -1,6 +1,5 @@
 package application.google;
 
-import application.google.CredentialAuthorizer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -9,11 +8,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CredentialAuthorizerTest {
+public class GoogleCredentialAuthorizerTest {
     @Test(expected = FileNotFoundException.class)
     public void throwExceptionWhenFileNotFound() throws IOException {
-        CredentialAuthorizer credentialAuthorizer = new CredentialAuthorizer("incorrectlocation.json");
+        GoogleCredentialAuthorizer googleCredentialAuthorizer = new GoogleCredentialAuthorizer("incorrectlocation.json");
 
-        credentialAuthorizer.authorize();
+        googleCredentialAuthorizer.authorize();
     }
 }

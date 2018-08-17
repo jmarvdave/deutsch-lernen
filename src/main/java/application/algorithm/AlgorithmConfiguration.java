@@ -1,6 +1,6 @@
 package application.algorithm;
 
-import application.google.CredentialAuthorizer;
+import application.google.GoogleCredentialAuthorizer;
 import application.google.GoogleSheetsConnector;
 import application.google.GoogleSheetsRetriever;
 import com.google.api.client.auth.oauth2.Credential;
@@ -11,9 +11,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 class AlgorithmConfiguration {
   @Bean
-  ResponseToAlgorithmTransformer responseToAlgorithmTransformer(CredentialAuthorizer credentialAuthorizer, GoogleSheetsConnector googleSheetsConnector)
+  ResponseToAlgorithmTransformer responseToAlgorithmTransformer(
+      GoogleCredentialAuthorizer googleCredentialAuthorizer, GoogleSheetsConnector googleSheetsConnector)
       throws IOException {
-    Credential authorize = credentialAuthorizer.authorize();
+    Credential authorize = googleCredentialAuthorizer.authorize();
     GoogleSheetsRetriever googleSheetsRetriever = new GoogleSheetsRetriever(googleSheetsConnector.connect(authorize));
     return new ResponseToAlgorithmTransformer(googleSheetsRetriever);
   }

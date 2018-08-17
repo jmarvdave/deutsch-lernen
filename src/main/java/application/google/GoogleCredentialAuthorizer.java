@@ -8,15 +8,15 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Collections;
 
-public class CredentialAuthorizer {
+public class GoogleCredentialAuthorizer {
     private final String credentialLocation;
 
-    public CredentialAuthorizer(String credentialLocation) {
+    public GoogleCredentialAuthorizer(String credentialLocation) {
         this.credentialLocation = credentialLocation;
     }
 
-    static CredentialAuthorizer createWithDefaultCredentiaLocation() {
-        return new CredentialAuthorizer("serviceclient.json");
+    static GoogleCredentialAuthorizer createWithDefaultCredentiaLocation() {
+        return new GoogleCredentialAuthorizer("serviceclient.json");
     }
 
     public Credential authorize() throws IOException {
