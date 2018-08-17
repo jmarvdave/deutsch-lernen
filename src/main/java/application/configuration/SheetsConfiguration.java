@@ -1,6 +1,5 @@
 package application.configuration;
 
-import application.service.ResultsWeigher;
 import application.transformer.ResponseToSheetTransformer;
 import application.utility.SheetsRetriever;
 import com.google.api.client.auth.oauth2.Credential;
@@ -22,10 +21,5 @@ public class SheetsConfiguration {
         Credential credential = credentialAuthorizer.authorize();
         SheetsRetriever sheetsRetriever = new SheetsRetriever(sheetsConnector.connect(credential));
         return new ResponseToSheetTransformer(sheetsRetriever);
-    }
-
-    @Bean
-    public ResultsWeigher resultsWeigher() {
-        return new ResultsWeigher();
     }
 }
