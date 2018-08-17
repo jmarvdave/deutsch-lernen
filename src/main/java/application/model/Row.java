@@ -19,6 +19,7 @@ public class Row {
 
     public enum TYPE {
         VERB,
-        NOUN
+        NOUN,
+        ADJECTIVE
     }
 }

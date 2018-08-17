@@ -17,13 +17,15 @@ public class TestGenerator {
 
     private final List<Row> verbRows;
     private final List<Row> nounRows;
+    private final List<Row> adjectiveRows;
 
-    public TestGenerator(List<Row> verbRows, List<Row> nounRows) {
+    public TestGenerator(List<Row> verbRows, List<Row> nounRows, List<Row> adjectiveRows) {
         this.verbRows = verbRows;
         this.nounRows = nounRows;
+        this.adjectiveRows = adjectiveRows;
     }
 
-    public Test generate(int numberOfVerbs, int numberOfNouns) {
+    public Test generate(int numberOfVerbs, int numberOfNouns, int numberOfAdjectives) {
         List<Row> randomVerbs = generateRandomIntegersForVerbs(new HashMap<>(), verbRows.size(), numberOfVerbs)
                 .stream()
                 .map(verbRows::get)
@@ -36,7 +38,13 @@ public class TestGenerator {
                 .sorted(Comparator.comparing(Row::getPrimaryElement))
                 .collect(Collectors.toList());
 
-        return Test.from(randomVerbs, randomNouns);
+        List<Row> randomAjectives = generateRandomIntegersForNouns(new HashMap<>(), adjectiveRows.size(), numberOfAdjectives)
+            .stream()
+            .map(adjectiveRows::get)
+            .sorted(Comparator.comparing(Row::getPrimaryElement))
+            .collect(Collectors.toList());
+
+        return Test.from(randomVerbs, randomNouns, randomAjectives);
     }
 
     private Set<Integer> generateRandomIntegersForVerbs(Map<String, Integer> wordToIndex, int totalNumberOfElements, int desiredSize) {

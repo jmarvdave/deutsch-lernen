@@ -34,6 +34,15 @@ public class ResponseToSheetTransformer {
                 .collect(Collectors.toList());
     }
 
+    public List<Row> transformToAdjectiveSheet(String sheetId) {
+        List<List<Object>> values = sheetsRetriever.getValuesFromSheet(sheetId);
+        return values
+            .stream()
+            .map(convertToRowModel())
+            .map(row -> new Row(row.get(0), TYPE.ADJECTIVE))
+            .collect(Collectors.toList());
+    }
+
     private Function<List<Object>, List<String>> convertToRowModel() {
         return (row) -> {
             StringBuilder o = new StringBuilder("");
