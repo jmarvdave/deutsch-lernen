@@ -19,7 +19,7 @@ public class CredentialAuthorizer {
         return new CredentialAuthorizer("serviceclient.json");
     }
 
-    Credential authorize() throws IOException {
+    public Credential authorize() throws IOException {
         // Load client secrets.
         GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream(credentialLocation))
                 .createScoped(Collections.singleton(SheetsScopes.SPREADSHEETS_READONLY));

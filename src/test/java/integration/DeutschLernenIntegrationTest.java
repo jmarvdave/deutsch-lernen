@@ -1,5 +1,9 @@
 package integration;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+
+import application.algorithm.AlgorithmExecutor;
 import application.configuration.ApplicationConfiguration;
 import application.configuration.ApplicationProperties;
 import application.configuration.CredentialAuthorizer;
@@ -8,23 +12,18 @@ import application.configuration.SheetsConfiguration;
 import application.configuration.SheetsConnector;
 import application.model.Row;
 import application.service.DeutschLernenService;
-import application.service.ResultsWeigher;
 import application.transformer.ResponseToSheetTransformer;
 import application.writer.LatexWriter;
 import com.google.common.collect.ImmutableList;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ActiveProfiles("dev")
@@ -46,7 +45,7 @@ public class DeutschLernenIntegrationTest {
     private CredentialAuthorizer credentialAuthorizer;
 
     @MockBean
-    private ResultsWeigher resultsWeigher;
+    private AlgorithmExecutor algorithmExecutor;
 
     @MockBean
     private SheetsConnector sheetsConnector;
@@ -57,9 +56,9 @@ public class DeutschLernenIntegrationTest {
         List<Row> listOfVerbs = ImmutableList.of(new Row("machen", Row.TYPE.VERB));
         List<Row> listOfNouns = ImmutableList.of(new Row( "Mann", Row.TYPE.NOUN));
         when(responseToSheetTransformer.transformToVerbSheet(VERB_SHEET_ID)).thenReturn(listOfVerbs);
-        when(resultsWeigher.apply(listOfVerbs)).thenReturn(listOfVerbs);
+        when(algorithmExecutor.apply(listOfVerbs)).thenReturn(listOfVerbs);
         when(responseToSheetTransformer.transformToNounSheet(NOUN_SHEET_ID)).thenReturn(listOfNouns);
-        when(resultsWeigher.apply(listOfNouns)).thenReturn(listOfNouns);
+        when(algorithmExecutor.apply(listOfNouns)).thenReturn(listOfNouns);
 
         //google sheets configurations
         when(sheetsConfiguration.transformer(credentialAuthorizer, sheetsConnector)).thenReturn(responseToSheetTransformer);
@@ -69,7 +68,7 @@ public class DeutschLernenIntegrationTest {
         LatexWriterConfiguration latexWriterConfiguration = new LatexWriterConfiguration(applicationProperties);
         LatexWriter latexWriter = latexWriterConfiguration.latexWriter();
 
-        ApplicationConfiguration applicationConfiguration = new ApplicationConfiguration(sheetsConfiguration.transformer(credentialAuthorizer, sheetsConnector), latexWriter, resultsWeigher);
+        ApplicationConfiguration applicationConfiguration = new ApplicationConfiguration(sheetsConfiguration.transformer(credentialAuthorizer, sheetsConnector), latexWriter, algorithmExecutor);
 
         DeutschLernenService application = applicationConfiguration.application();
 
