@@ -1,5 +1,8 @@
 package application.service;
 
+import static org.mockito.Mockito.times;
+
+import application.algorithm.AlgorithmExecutor;
 import application.transformer.ResponseToSheetTransformer;
 import application.writer.LatexWriter;
 import org.junit.Test;
@@ -7,8 +10,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import static org.mockito.Mockito.times;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DeutschLernenServiceTest {
@@ -20,11 +21,12 @@ public class DeutschLernenServiceTest {
     private LatexWriter writer;
 
     @Mock
-    private ResultsWeigher resultsWeigher;
+    private AlgorithmExecutor algorithmExecutor;
 
     @Test
     public void run() {
-        DeutschLernenService service = new DeutschLernenService(transformer, writer, resultsWeigher);
+        DeutschLernenService service = new DeutschLernenService(transformer,
+            writer, algorithmExecutor);
 
         service.run();
 

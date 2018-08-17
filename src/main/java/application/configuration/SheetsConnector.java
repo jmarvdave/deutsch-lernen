@@ -51,7 +51,7 @@ public class SheetsConnector {
         }
     }
 
-    Sheets connect(Credential credential) {
+    public Sheets connect(Credential credential) {
         return new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
                 .setApplicationName(APPLICATION_NAME)
                 .build();

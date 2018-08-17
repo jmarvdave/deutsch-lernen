@@ -1,13 +1,12 @@
 package application.configuration;
 
-import application.service.ResultsWeigher;
+import application.algorithm.AlgorithmExecutor;
 import application.transformer.ResponseToSheetTransformer;
 import application.writer.LatexWriter;
 import org.junit.Test;
 import org.mockito.Mock;
 
 public class ApplicationConfigurationTest {
-
     @Mock
     private ResponseToSheetTransformer responseToSheetTransformer;
 
@@ -15,11 +14,11 @@ public class ApplicationConfigurationTest {
     private LatexWriter latexWriter;
 
     @Mock
-    private ResultsWeigher resultsWeigher;
+    private AlgorithmExecutor algorithmExecutor;
 
     @Test
     public void application() {
-        ApplicationConfiguration applicationConfiguration = new ApplicationConfiguration(responseToSheetTransformer, latexWriter, resultsWeigher);
+        ApplicationConfiguration applicationConfiguration = new ApplicationConfiguration(responseToSheetTransformer, latexWriter, algorithmExecutor);
 
         applicationConfiguration.application();
     }
