@@ -1,28 +1,26 @@
-package application.transformer;
+package application.row;
 
-import application.model.Row;
-import application.utility.SheetsRetriever;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+
+import application.google.GoogleSheetsRetriever;
 import com.google.common.collect.ImmutableList;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
-
 @RunWith(MockitoJUnitRunner.class)
-public class ResponseToSheetTransformerTest {
+public class ResponseToRowsTransformerTest {
 
     private static final String SHEET = "weoifn34f";
 
     @Mock
-    private SheetsRetriever sheetsRetriever;
+    private GoogleSheetsRetriever googleSheetsRetriever;
     @Mock
-    private ResponseToSheetTransformer transformer;
+    private ResponseToRowsTransformer transformer;
 
     private final List<Object> firstVerbRow = ImmutableList.of("machen", "es wird gemacht", "oft benutzt Verb");
     private final List<Object> secondVerbRow = ImmutableList.of("anschalten", "es ist angechaltet", "ein Compter kann angeschaltet sein");
@@ -35,12 +33,12 @@ public class ResponseToSheetTransformerTest {
 
     @Before
     public void setUp() {
-        transformer = new ResponseToSheetTransformer(sheetsRetriever);
+        transformer = new ResponseToRowsTransformer(googleSheetsRetriever);
     }
 
     @Test
     public void transformToVerbSheet() {
-        when(sheetsRetriever.getValuesFromSheet(SHEET)).thenReturn(verbList1);
+        when(googleSheetsRetriever.getValuesFromSheet(SHEET)).thenReturn(verbList1);
         List<Row> verbRows = transformer.transformToVerbSheet(SHEET);
 
         assertThat(verbRows.size()).isEqualTo(2);
@@ -48,7 +46,7 @@ public class ResponseToSheetTransformerTest {
 
     @Test
     public void transformToNounSheet() {
-        when(sheetsRetriever.getValuesFromSheet(SHEET)).thenReturn(nounList);
+        when(googleSheetsRetriever.getValuesFromSheet(SHEET)).thenReturn(nounList);
         List<Row> nounRows = transformer.transformToNounSheet(SHEET);
 
         assertThat(nounRows.size()).isEqualTo(2);
@@ -56,7 +54,7 @@ public class ResponseToSheetTransformerTest {
 
     @Test
     public void handlesExceptionWhenNotesAreBlank() {
-        when(sheetsRetriever.getValuesFromSheet(SHEET)).thenReturn(verbList2);
+        when(googleSheetsRetriever.getValuesFromSheet(SHEET)).thenReturn(verbList2);
         List<Row> verbRows = transformer.transformToVerbSheet(SHEET);
 
         assertThat(verbRows.size()).isEqualTo(3);

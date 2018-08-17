@@ -1,6 +1,6 @@
 package application.algorithm;
 
-import application.utility.SheetsRetriever;
+import application.google.GoogleSheetsRetriever;
 import com.google.common.collect.ImmutableList;
 import java.time.DayOfWeek;
 import java.util.List;
@@ -12,19 +12,19 @@ public class ResponseToAlgorithmTransformer {
   private static final String ALGORITHM_SHEET_ID = "1oalhNUo1jD2vhNFi1cygYMnXlQXRyRe3Tm1tU03dZ9w";
   private final String sheetId;
 
-  private final SheetsRetriever sheetsRetriever;
+  private final GoogleSheetsRetriever googleSheetsRetriever;
 
-  public ResponseToAlgorithmTransformer(SheetsRetriever sheetsRetriever) {
-    this(ALGORITHM_SHEET_ID, sheetsRetriever);
+  public ResponseToAlgorithmTransformer(GoogleSheetsRetriever googleSheetsRetriever) {
+    this(ALGORITHM_SHEET_ID, googleSheetsRetriever);
   }
 
-  public ResponseToAlgorithmTransformer(String sheetId, SheetsRetriever sheetsRetriever) {
+  public ResponseToAlgorithmTransformer(String sheetId, GoogleSheetsRetriever googleSheetsRetriever) {
     this.sheetId = sheetId;
-    this.sheetsRetriever = sheetsRetriever;
+    this.googleSheetsRetriever = googleSheetsRetriever;
   }
 
   Map<DayOfWeek, Algorithm> transformIntoAlgorithm() {
-    List<List<Object>> values = sheetsRetriever.getValuesFromSheet(sheetId);
+    List<List<Object>> values = googleSheetsRetriever.getValuesFromSheet(sheetId);
     return values
         .stream()
         .map(this::convertToAlgorithmList)

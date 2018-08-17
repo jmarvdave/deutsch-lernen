@@ -3,8 +3,8 @@ package application.service;
 import static org.mockito.Mockito.times;
 
 import application.algorithm.AlgorithmExecutor;
-import application.transformer.ResponseToSheetTransformer;
-import application.writer.LatexWriter;
+import application.row.ResponseToRowsTransformer;
+import application.exam.ExamWriter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -15,10 +15,10 @@ import org.mockito.junit.MockitoJUnitRunner;
 public class DeutschLernenServiceTest {
 
     @Mock
-    private ResponseToSheetTransformer transformer;
+    private ResponseToRowsTransformer transformer;
 
     @Mock
-    private LatexWriter writer;
+    private ExamWriter writer;
 
     @Mock
     private AlgorithmExecutor algorithmExecutor;

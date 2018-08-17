@@ -3,7 +3,7 @@ package application.algorithm;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
-import application.model.Row;
+import application.row.Row;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
 import org.junit.Before;

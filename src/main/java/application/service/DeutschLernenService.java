@@ -1,19 +1,19 @@
 package application.service;
 
 import application.algorithm.AlgorithmExecutor;
-import application.generator.TestGenerator;
-import application.model.Row;
-import application.model.Test;
-import application.transformer.ResponseToSheetTransformer;
-import application.writer.LatexWriter;
+import application.exam.Exam;
+import application.exam.ExamGenerator;
+import application.row.ResponseToRowsTransformer;
+import application.row.Row;
+import application.exam.ExamWriter;
 import java.util.List;
 import javax.annotation.PostConstruct;
 
 public class DeutschLernenService {
 
-  private final ResponseToSheetTransformer transformer;
+  private final ResponseToRowsTransformer transformer;
   private final AlgorithmExecutor algorithmExecutor;
-  private final LatexWriter writer;
+  private final ExamWriter writer;
   private static final String VERB_SHEET_ID = "1MpUyZq-UDfvHAt2jZN45cEQnyeSk6Nr56_slyQUMcDI";
   private static final String NOUN_SHEET_ID = "1-JL2h2SrndIbNkOGJmueRxcZwqaSl90meGc6fkeJ-Go";
   private static final String ADJECTIVES_SHEET_ID = "1m32NmkZMzUKgRuhTlBoP5I3Q_BOZ8pL5ci9oFIozWzk";
@@ -22,8 +22,8 @@ public class DeutschLernenService {
   private static final int NUMBER_OF_NOUNS = 5;
   private static final int NUMBER_OF_ADJECTIVES = 1;
 
-  public DeutschLernenService(ResponseToSheetTransformer transformer,
-      LatexWriter writer,
+  public DeutschLernenService(ResponseToRowsTransformer transformer,
+      ExamWriter writer,
       AlgorithmExecutor algorithmExecutor) {
     this.transformer = transformer;
     this.writer = writer;
@@ -44,14 +44,14 @@ public class DeutschLernenService {
     Integer numberOfNouns = setResultLimit(nounRows, NUMBER_OF_NOUNS);
     Integer numberOfAdjectives = setResultLimit(nounRows, NUMBER_OF_ADJECTIVES);
 
-    Test test = new TestGenerator(verbRowsWithAppliedAlgorithm, nounRowsWithAppliedAlgorithm,
+    Exam exam = new ExamGenerator(verbRowsWithAppliedAlgorithm, nounRowsWithAppliedAlgorithm,
         adjectiveRowsWithAppliedAlgorithm)
         .generate(numberOfVerbs, numberOfNouns, numberOfAdjectives);
-    writer.writeTestToFile(test.getRandomVerbs(), test.getRandomNouns(), test.getRandomAdjectives(), "testing.tex");
+    writer.writeTestToFile(exam.getRandomVerbs(), exam.getRandomNouns(), exam.getRandomAdjectives(), "testing.tex");
   }
 
   private int setResultLimit(List<Row> rows, int desiredLimit) {
-    Integer numberOfNouns = desiredLimit;
+    int numberOfNouns = desiredLimit;
     if (rows.size() <= numberOfNouns) {
       numberOfNouns = rows.size();
     }

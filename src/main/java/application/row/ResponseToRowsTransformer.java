@@ -1,23 +1,22 @@
-package application.transformer;
+package application.row;
 
-import application.model.Row;
-import application.model.Row.TYPE;
-import application.utility.SheetsRetriever;
+import application.row.Row.TYPE;
+import application.google.GoogleSheetsRetriever;
 import com.google.common.collect.ImmutableList;
 
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class ResponseToSheetTransformer {
-    private final SheetsRetriever sheetsRetriever;
+public class ResponseToRowsTransformer {
+    private final GoogleSheetsRetriever googleSheetsRetriever;
 
-    public ResponseToSheetTransformer(SheetsRetriever sheetsRetriever) {
-        this.sheetsRetriever = sheetsRetriever;
+    public ResponseToRowsTransformer(GoogleSheetsRetriever googleSheetsRetriever) {
+        this.googleSheetsRetriever = googleSheetsRetriever;
     }
 
     public List<Row> transformToVerbSheet(String sheetId) {
-        List<List<Object>> values = sheetsRetriever.getValuesFromSheet(sheetId);
+        List<List<Object>> values = googleSheetsRetriever.getValuesFromSheet(sheetId);
         return values
                 .stream()
                 .map(convertToRowModel())
@@ -26,7 +25,7 @@ public class ResponseToSheetTransformer {
     }
 
     public List<Row> transformToNounSheet(String sheetId) {
-        List<List<Object>> values = sheetsRetriever.getValuesFromSheet(sheetId);
+        List<List<Object>> values = googleSheetsRetriever.getValuesFromSheet(sheetId);
         return values
                 .stream()
                 .map(convertToRowModel())
@@ -35,7 +34,7 @@ public class ResponseToSheetTransformer {
     }
 
     public List<Row> transformToAdjectiveSheet(String sheetId) {
-        List<List<Object>> values = sheetsRetriever.getValuesFromSheet(sheetId);
+        List<List<Object>> values = googleSheetsRetriever.getValuesFromSheet(sheetId);
         return values
             .stream()
             .map(convertToRowModel())

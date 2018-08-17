@@ -1,18 +1,24 @@
-package application.writer;
+package application.exam;
 
-import application.model.Row;
+import application.row.Row;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.function.Consumer;
 
-public class LatexWriter {
+public class ExamWriter {
 
   private final String date;
   private final Writer writer;
 
-  public LatexWriter(String date) {
+  public ExamWriter(String date) {
     this(date, new Writer());
   }
 
-  public LatexWriter(String date, Writer writer) {
+  public ExamWriter(String date, Writer writer) {
     this.date = date;
     this.writer = writer;
   }
@@ -40,7 +46,7 @@ public class LatexWriter {
 
   public void writeTestToFile(List<Row> verbs, List<Row> nouns, List<Row> adjectives,
       String fileName) {
-    Writer.withBufferedWriter((bufferedWriter) -> {
+    withBufferedWriter((bufferedWriter) -> {
       writer.writeToFile(bufferedWriter, beginning(date));
 
       verbs.forEach((verb) -> writer
@@ -59,6 +65,16 @@ public class LatexWriter {
 
       writer.writeToFile(bufferedWriter, ENDING);
     }, fileName);
+  }
+
+  static void withBufferedWriter(Consumer<BufferedWriter> consumer, String fileName) {
+    Path path = Paths.get(fileName);
+
+    try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path);) {
+      consumer.accept(bufferedWriter);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
 

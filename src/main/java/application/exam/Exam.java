@@ -1,8 +1,9 @@
-package application.model;
+package application.exam;
 
+import application.row.Row;
 import java.util.List;
 
-public class Test {
+public class Exam {
 
     private final List<Row> randomAjectives;
     private final List<Row> randomVerbs;
@@ -20,13 +21,13 @@ public class Test {
         return randomAjectives;
     }
 
-    private Test(List<Row> randomVerbs, List<Row> randomNouns, List<Row> randomAjectives) {
+    private Exam(List<Row> randomVerbs, List<Row> randomNouns, List<Row> randomAjectives) {
         this.randomVerbs = randomVerbs;
         this.randomNouns = randomNouns;
         this.randomAjectives = randomAjectives;
     }
 
-    public static Test from(List<Row> randomVerbs, List<Row> randomNouns, List<Row> randomAjectives) {
-        return new Test(randomVerbs, randomNouns, randomAjectives);
+    public static Exam from(List<Row> randomVerbs, List<Row> randomNouns, List<Row> randomAjectives) {
+        return new Exam(randomVerbs, randomNouns, randomAjectives);
     }
 }

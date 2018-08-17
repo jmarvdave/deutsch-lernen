@@ -1,6 +1,6 @@
 package application.algorithm;
 
-import application.model.Row;
+import application.row.Row;
 import com.google.common.collect.Lists;
 import java.util.Collection;
 import java.util.Collections;

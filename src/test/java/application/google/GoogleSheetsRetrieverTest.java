@@ -1,4 +1,4 @@
-package application.utility;
+package application.google;
 
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.Sheets.Spreadsheets;
@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class SheetsRetrieverTest {
+public class GoogleSheetsRetrieverTest {
 
     @Mock
     private Sheets sheetsService;
@@ -34,11 +34,11 @@ public class SheetsRetrieverTest {
     @Mock
     private Get get;
 
-    private SheetsRetriever sheetsRetriever;
+    private GoogleSheetsRetriever googleSheetsRetriever;
 
     @Before
     public void setUp() {
-        sheetsRetriever = new SheetsRetriever(sheetsService);
+        googleSheetsRetriever = new GoogleSheetsRetriever(sheetsService);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class SheetsRetrieverTest {
         when(spreadsheets.values()).thenReturn(values);
         when(sheetsService.spreadsheets()).thenReturn(spreadsheets);
 
-        List<List<Object>> valuesFromSheet = sheetsRetriever.getValuesFromSheet("example");
+        List<List<Object>> valuesFromSheet = googleSheetsRetriever.getValuesFromSheet("example");
 
         assertThat(valuesFromSheet.isEmpty()).isFalse();
     }
@@ -59,6 +59,6 @@ public class SheetsRetrieverTest {
     public void throwsExceptionWhenServiceFails() {
         when(sheetsService.spreadsheets()).thenThrow(IOException.class);
 
-        sheetsRetriever.getValuesFromSheet("example");
+        googleSheetsRetriever.getValuesFromSheet("example");
     }
 }

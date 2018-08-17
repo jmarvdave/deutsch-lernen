@@ -2,8 +2,8 @@ package application.configuration;
 
 import application.algorithm.AlgorithmExecutor;
 import application.service.DeutschLernenService;
-import application.transformer.ResponseToSheetTransformer;
-import application.writer.LatexWriter;
+import application.row.ResponseToRowsTransformer;
+import application.exam.ExamWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,21 +11,21 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ApplicationConfiguration {
 
-    private final ResponseToSheetTransformer transformer;
-    private final LatexWriter latexWriter;
+    private final ResponseToRowsTransformer transformer;
+    private final ExamWriter examWriter;
     private final AlgorithmExecutor algorithmExecutor;
 
     @Autowired
-    public ApplicationConfiguration(ResponseToSheetTransformer transformer,
-        LatexWriter latexWriter,
+    public ApplicationConfiguration(ResponseToRowsTransformer transformer,
+        ExamWriter examWriter,
         AlgorithmExecutor algorithmExecutor) {
         this.transformer = transformer;
-        this.latexWriter = latexWriter;
+        this.examWriter = examWriter;
         this.algorithmExecutor = algorithmExecutor;
     }
 
     @Bean
     public DeutschLernenService application() {
-        return new DeutschLernenService(transformer, latexWriter, algorithmExecutor);
+        return new DeutschLernenService(transformer, examWriter, algorithmExecutor);
     }
 }

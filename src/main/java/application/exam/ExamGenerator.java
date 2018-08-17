@@ -1,8 +1,6 @@
-package application.generator;
+package application.exam;
 
-import application.model.Row;
-import application.model.Test;
-
+import application.row.Row;
 import java.security.SecureRandom;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -13,19 +11,19 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class TestGenerator {
+public class ExamGenerator {
 
     private final List<Row> verbRows;
     private final List<Row> nounRows;
     private final List<Row> adjectiveRows;
 
-    public TestGenerator(List<Row> verbRows, List<Row> nounRows, List<Row> adjectiveRows) {
+    public ExamGenerator(List<Row> verbRows, List<Row> nounRows, List<Row> adjectiveRows) {
         this.verbRows = verbRows;
         this.nounRows = nounRows;
         this.adjectiveRows = adjectiveRows;
     }
 
-    public Test generate(int numberOfVerbs, int numberOfNouns, int numberOfAdjectives) {
+    public Exam generate(int numberOfVerbs, int numberOfNouns, int numberOfAdjectives) {
         List<Row> randomVerbs = generateRandomIntegersForVerbs(new HashMap<>(), verbRows.size(), numberOfVerbs)
                 .stream()
                 .map(verbRows::get)
@@ -44,7 +42,7 @@ public class TestGenerator {
             .sorted(Comparator.comparing(Row::getPrimaryElement))
             .collect(Collectors.toList());
 
-        return Test.from(randomVerbs, randomNouns, randomAjectives);
+        return Exam.from(randomVerbs, randomNouns, randomAjectives);
     }
 
     private Set<Integer> generateRandomIntegersForVerbs(Map<String, Integer> wordToIndex, int totalNumberOfElements, int desiredSize) {
