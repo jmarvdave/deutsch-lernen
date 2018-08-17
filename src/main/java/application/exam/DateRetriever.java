@@ -1,18 +1,18 @@
-package application.utility;
+package application.exam;
 
 import application.configuration.ApplicationProperties;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class DateRetriever {
+class DateRetriever {
     private final ApplicationProperties applicationProperties;
 
-    public DateRetriever(ApplicationProperties applicationProperties) {
+    DateRetriever(ApplicationProperties applicationProperties) {
         this.applicationProperties = applicationProperties;
     }
 
-    public String getDate() {
+    String getDate() {
         String date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 
         if (!"none".equals(applicationProperties.getDate())) {

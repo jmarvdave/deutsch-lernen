@@ -1,4 +1,4 @@
-package application.model;
+package application.row;
 
 public class Row {
     private final String primaryElement;

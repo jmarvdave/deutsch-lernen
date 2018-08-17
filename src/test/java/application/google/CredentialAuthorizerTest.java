@@ -1,5 +1,6 @@
-package application.configuration;
+package application.google;
 
+import application.google.CredentialAuthorizer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;

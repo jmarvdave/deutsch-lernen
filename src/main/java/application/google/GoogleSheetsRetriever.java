@@ -1,4 +1,4 @@
-package application.utility;
+package application.google;
 
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.ValueRange;
@@ -6,11 +6,11 @@ import com.google.api.services.sheets.v4.model.ValueRange;
 import java.io.IOException;
 import java.util.List;
 
-public class SheetsRetriever {
+public class GoogleSheetsRetriever {
 
     private final Sheets sheetsService;
 
-    public SheetsRetriever(Sheets sheetsService) {
+    public GoogleSheetsRetriever(Sheets sheetsService) {
         this.sheetsService = sheetsService;
     }
 

@@ -1,4 +1,4 @@
-package application.configuration;
+package application.google;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
@@ -11,7 +11,7 @@ import java.util.Collections;
 public class CredentialAuthorizer {
     private final String credentialLocation;
 
-    CredentialAuthorizer(String credentialLocation) {
+    public CredentialAuthorizer(String credentialLocation) {
         this.credentialLocation = credentialLocation;
     }
 

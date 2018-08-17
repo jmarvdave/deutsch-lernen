@@ -1,6 +1,7 @@
-package application.utility;
+package application.exam;
 
 import application.configuration.ApplicationProperties;
+import application.exam.DateRetriever;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
