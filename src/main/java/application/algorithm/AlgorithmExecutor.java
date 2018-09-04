@@ -27,6 +27,10 @@ public class AlgorithmExecutor {
     }
   }
 
+  public String getAlgorithm() {
+    return algorithmSettings.getAlgorithm().name();
+  }
+
   private List<Row> oldest(List<Row> incomingRows) {
     List<Row> rows = Lists.reverse(incomingRows);
     return lastEntriesAppearMostOften(rows);

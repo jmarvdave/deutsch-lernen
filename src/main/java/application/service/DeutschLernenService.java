@@ -6,6 +6,7 @@ import application.exam.ExamGenerator;
 import application.row.ResponseToRowsTransformer;
 import application.row.Row;
 import application.exam.ExamWriter;
+import application.telegram.TelegramNotifier;
 import java.util.List;
 import javax.annotation.PostConstruct;
 
@@ -13,6 +14,7 @@ public class DeutschLernenService {
 
   private final ResponseToRowsTransformer transformer;
   private final AlgorithmExecutor algorithmExecutor;
+  private final TelegramNotifier notifier;
   private final ExamWriter writer;
   private static final String VERB_SHEET_ID = "1MpUyZq-UDfvHAt2jZN45cEQnyeSk6Nr56_slyQUMcDI";
   private static final String NOUN_SHEET_ID = "1-JL2h2SrndIbNkOGJmueRxcZwqaSl90meGc6fkeJ-Go";
@@ -24,10 +26,12 @@ public class DeutschLernenService {
 
   public DeutschLernenService(ResponseToRowsTransformer transformer,
       ExamWriter writer,
-      AlgorithmExecutor algorithmExecutor) {
+      AlgorithmExecutor algorithmExecutor,
+      TelegramNotifier notifier) {
     this.transformer = transformer;
     this.writer = writer;
     this.algorithmExecutor = algorithmExecutor;
+    this.notifier = notifier;
   }
 
   @PostConstruct
@@ -47,7 +51,11 @@ public class DeutschLernenService {
     Exam exam = new ExamGenerator(verbRowsWithAppliedAlgorithm, nounRowsWithAppliedAlgorithm,
         adjectiveRowsWithAppliedAlgorithm)
         .generate(numberOfVerbs, numberOfNouns, numberOfAdjectives);
-    writer.writeTestToFile(exam.getRandomVerbs(), exam.getRandomNouns(), exam.getRandomAdjectives(), "testing.tex");
+    List<Row> randomVerbs = exam.getRandomVerbs();
+    List<Row> randomNouns = exam.getRandomNouns();
+    List<Row> randomAdjectives = exam.getRandomAdjectives();
+    writer.writeTestToFile(randomVerbs, randomNouns, randomAdjectives, "testing.tex");
+    notifier.sendReport(algorithmExecutor.getAlgorithm(), randomVerbs.size(), randomAdjectives.size(), randomNouns.size());
   }
 
   private int setResultLimit(List<Row> rows, int desiredLimit) {
