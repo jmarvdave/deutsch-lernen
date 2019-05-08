@@ -32,7 +32,7 @@
         <dependency>
             <groupId>com.google.apis</groupId>
             <artifactId>google-api-services-sheets</artifactId>
-            <version>v4-rev512-1.23.0</version>
+            <version>v4-rev20190429-1.28.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
